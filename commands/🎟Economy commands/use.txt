@@ -1,0 +1,200 @@
+const Discord = require('discord.js')
+
+const profileModel = require("../../models/profileSchema");
+
+module.exports = {
+    name: 'use',
+    aliases: [],
+    cooldown: 40,
+    permissions: [],
+    description: 'Use an item',
+    usage: "use <item> <amount> [@person]",
+    async execute(message, args, cmd, client, discord, profileData){
+
+           
+        const userData = await profileModel.findOne({ userID: message.author.id});
+
+                if(!args.length) return message.channel.send('You need to input an item after the command "use"');
+       const item = args[0];
+        if(item === 'drugs'){
+        if(message.guild.id == '826787118104838184') return message.reply('no drugs in dis server ):')
+if(userData.drugs == 0) return message.reply('u dont have drugs lol.')
+
+        await profileModel.findOneAndUpdate({
+
+            userID: message.author.id
+            }, {
+                $inc: {
+            drugs: -1,
+                },
+        }
+        );
+        const replies = ['1', '2', '4', '3']; 
+
+        const result = Math.floor(Math.random() * replies.length); 
+        if(result[replies] !== 4){
+            const deadmoniy = Math.floor(Math.random() * 2000) + 1;
+            if(userData.moniy < deadmoniy){
+                await profileModel.findOneAndUpdate({
+
+                    userID: message.author.id
+                    }, {
+                        $inc: {
+                    moniy: -userData.moniy,
+                        },
+                }
+                );
+                const drugEmbed = new Discord.MessageEmbed()
+                .setColor('#fff85f')
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setTitle(`You succesfully did drugs and died... U lost ${userData.moniy} moniy`)
+         
+                return message.channel.send({embeds: [drugEmbed]});
+            } else{
+                await profileModel.findOneAndUpdate({
+
+                    userID: message.author.id
+                    }, {
+                        $inc: {
+                    moniy: -deadmoniy,
+                        },
+                }
+                );
+                const drugEmbed = new Discord.MessageEmbed()
+                .setColor('#fff85f')
+                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setTitle(`You succesfully did drugs and died... U lost ${deadmoniy} moniy`)
+         
+                return message.channel.send({embeds: [drugEmbed]});
+            }
+
+        } else{
+        const drugEmbed = new Discord.MessageEmbed()
+        .setColor('#fff85f')
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+        .setTitle(`Succesfully used some quality drugs and you survived!`)
+ 
+        return message.channel.send({embeds: [drugEmbed]});
+        }
+    } else if(item == 'guitar'){
+        if(userData.guitar == 0) return message.reply('u dont have a guitar my man.')
+    const gmoniy = Math.floor(Math.random() * 800) + 1;
+    await profileModel.findOneAndUpdate({
+
+        userID: message.author.id
+        }, {
+            $inc: {
+        moniy: gmoniy,
+            },
+    }
+    );
+    const guitarEmbed = new Discord.MessageEmbed()
+    .setColor('#fff85f')
+    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setTitle(`Succesfully played on the streets and u got ${gmoniy}!`)
+
+    return message.channel.send({embeds: [guitarEmbed]});
+    } else if(item == 'broom'){
+        if(userData.broom == 0) return message.reply('you dont have a broom.')
+
+        const bmoniy = Math.floor(Math.random() * 200) + 1;
+        await profileModel.findOneAndUpdate({
+
+            userID: message.author.id
+            }, {
+                $inc: {
+            moniy: bmoniy,
+                },
+        }
+        );
+    const broomEmbed = new Discord.MessageEmbed()
+    .setColor('#fff85f')
+    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setTitle(`Succesfully got some moniy (${bmoniy})`)
+
+    return message.channel.send({embeds: [broomEmbed]});
+    } else if(item == 'tomato'){
+        const target = message.mentions.users.first();
+        
+        const targetData = await profileModel.findOne({ userID: target.id});
+        if(!args[1]) return message.reply('you need ta mention someone.')
+        if(!target) return message.reply("You didnt tag anyone to throw the tomato at!")
+        if(userData.tomato == 0) return message.reply('you dont have a single tomato lol')
+        if(args[2]){
+        const number = args[2]
+        if(number % 1 !=0 || number <= 0) return message.reply('you cant give someone a number like this!');
+        if(number > userData.tomato) return message.reply('you dont have enough tomatoes bruv.')
+        await profileModel.findOneAndUpdate({
+
+            userID: message.author.id
+            }, {
+                $inc: {
+            tomato: -number,
+                },
+        }
+        );
+        await profileModel.findOneAndUpdate({
+    
+            userID: target.id
+            }, {
+                $inc: {
+            moniy: -number,
+                },
+        }
+        );
+        const tomatoEmbed = new Discord.MessageEmbed()
+        .setColor('#fff85f')
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+        .setTitle(`You threw ur tomato at ${target.username} and he lost ${number} moniy`)
+    
+        return message.channel.send({embeds: [tomatoEmbed]});
+        }else{
+    await profileModel.findOneAndUpdate({
+
+        userID: message.author.id
+        }, {
+            $inc: {
+        tomato: -1,
+            },
+    }
+    );
+    await profileModel.findOneAndUpdate({
+
+        userID: target.id
+        }, {
+            $inc: {
+        moniy: -1,
+            },
+    }
+    );
+    const tomatoEmbed = new Discord.MessageEmbed()
+    .setColor('#fff85f')
+    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setTitle(`You threw ur tomato at ${target.username} and he lost 1 moniy`)
+
+    return message.channel.send({embeds: [tomatoEmbed]});
+}
+    } else if(item == 'handgun'){
+        if(userData.handgun == 0) return message.reply('You dont have a gun lol')
+
+
+    const gunEmbed = new Discord.MessageEmbed()
+    .setColor('#fff85f')
+    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setTitle(`If you get robbed, you have a 50% chance that you the rob will fail!`)
+
+    return message.channel.send({embeds: [gunEmbed]});
+    }
+      
+        
+    
+        
+
+            const fraudEmbed = new Discord.MessageEmbed()
+            .setColor('#e10000')
+            .setTitle('Error!')
+            .setTitle('Incorrect item name🛑!')
+                      message.channel.send({embeds: [fraudEmbed]}) 
+        
+    },
+};

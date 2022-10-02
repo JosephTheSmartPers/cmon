@@ -1,0 +1,87 @@
+const Discord = require('discord.js')
+const guildModel = require('../../models/guildSchema')
+module.exports = {
+    name: 'ticket',
+    aliases: [],
+    cooldown: 120,
+    permissions: ["SEND_MESSAGES"],
+    description: 'Creates a ticket!',
+    usage: "ticket",
+    async execute(message, args, cmd, client, Discord){
+        const channel = await message.guild.channels.create(`Ticket: ${message.author.tag}`);
+        const category = await guildModel.findOne({guildID: message.guildId});
+        if(!category) return 
+        const categoryt = await message.guild.channels.cache.find(category => category.id === category.ticketcategory)
+        if(category.ticketcategory === null) return message.channel.send('ticket category does not exist!');
+        channel.setParent(category.ticketcategory);
+        try{
+        channel.permissionOverwrites.edit(message.guildId, {
+            SEND_MESSAGES: false,
+            VIEW_CHANNEL: false,
+        });
+        channel.permissionOverwrites.edit(message.author,{
+            SEND_MESSAGES: true,
+            VIEW_CHANNEL: true,
+        });
+    }catch(err){
+        console.log(err)
+        channel.delete();
+    }
+        const ticketEmbed = new Discord.MessageEmbed()
+        .setColor('#00FFEC')
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }) )
+        .setTitle(`<a:check:854289501148020747>Successfully created ticket!`)
+             .setFooter('Support will arrive shortly!')
+
+        const reactionMessage = await channel.send({embeds: [ticketEmbed]})
+        try{
+            await reactionMessage.react("🔒");
+            await reactionMessage.react("🛑");
+        }catch(err){
+        channel.send("Der was an error while sending da emojis!")
+        throw err;
+        }
+        
+        const collector = reactionMessage.createReactionCollector(
+            async (reaction, user) => message.guild.members.cache.find((member) => member.id === user.id).hasPermission("ADMINISTRATOR"),
+        { dispose: true }
+        );
+        await collector.on('collect', async (reaction, user) => {
+            switch (reaction.emoji.name){
+                case "🔒":
+                    channel.permissionOverwrites.edit(message.author, { SEND_MESSAGES: false});
+                    break;
+                    case "🛑":
+                    const r = await channel.send('Deleteing channel in 5 seconds')
+                    let number = 5
+                    const id = setInterval(async () => {
+                        await r.edit(`Deleteing channel in ${number} seconds`)
+                        number --;
+                        if(number == -1){ clearInterval(id)};
+                    }, 1000);
+                    setTimeout(async () => {
+                        await channel.delete()
+                    }, 7000);
+                    break;
+            }
+        });
+        message.channel.send(`Your ticket has been submited to: ${channel}`).then(async (msg) => {
+            setTimeout(() => msg.delete(), 7000);
+            setTimeout(() => message.delete(), 3000);
+            let lc = await guildModel.findOne({guildID: message.guildId});
+         if(!lc.logschannel) return
+         if(!lc) return
+         const logs = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
+         if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
+
+            const logEmbed = new Discord.MessageEmbed()
+            .setColor('#e3b938')
+            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+            .setTitle(`created a ticket`)
+            .setTimestamp();
+                       logs.send({embeds: [logEmbed]})
+        }).catch((err) => {
+            throw err;
+        })
+    },
+}
