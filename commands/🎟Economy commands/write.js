@@ -15,7 +15,7 @@ module.exports = {
             let inv = userData.inv
             let current = parseInt(inv[path])
             inv[path] = current - itemAmount
-    
+
             await profileModel.findOneAndUpdate({
                 userID: person
                 }, {
@@ -47,7 +47,7 @@ module.exports = {
             "You wrote about why repbulicans rock!",
             "You wrote about why you should not like corruption."
             ]
-        if(0 >= userData.inv.typewriter) return message.reply('you dont have a pen.')
+        if(0 >= userData.inv.typewriter) return message.reply('you dont have a typewriter.')
         const replies = [
             {name: "fake", emojiName: "📢Fake News ", chance: 40, max: 5000, min: 1000, sucess: fsuc, fail: "You kinda got arrested for missinformation..."},
             {name: "global", emojiName: "🌍Global News ", chance: 10, max: 2000, min: 250, sucess: gsuc, fail: "It turn out, all of China isn't actually on fire..."},
@@ -56,7 +56,7 @@ module.exports = {
         ]
         const result = Math.floor(Math.random() * 15) + 1;
         const replyEmbed = new Discord.MessageEmbed()
-            .setTitle("🗞️What kind of article do you wan't to write?")
+            .setTitle("🗞️What kind of article do you want to write?")
             .setColor("BLUE")
             .addFields(
                 replies.map(r=>{
@@ -83,13 +83,13 @@ module.exports = {
                 const randomer = Math.floor(Math.random() * 100)
                 console.log(randomer.toString() + " " + r.chance)
                 if(r.chance >= randomer) {
-                    const failEmbed = new Discord.MessageEmbed()
-                        .setTitle("Your article was kinda bad, and your pen broke.")
-                        .setColor("RED")
+                    const failEmbed = new Discord.EmbedBuilder()
+                        .setTitle("Your article was kinda bad, and your typewriter broke.")
+                        .setColor("Red")
                         .setDescription(r.fail)
                     m.channel.send({embeds: [failEmbed]})
 
-                    buytem(message.author.id, 1, "pen")
+                    buytem(message.author.id, 1, "typewriter")
                         return
                 }
                 await profileModel.findOneAndUpdate({
@@ -102,12 +102,12 @@ module.exports = {
                 }
                 );
                 const result = Math.floor(Math.random() * r.sucess.length);
-                const fitEmbed = new Discord.MessageEmbed()
+                const fitEmbed = new Discord.EmbedBuilder()
                     .setColor('#fff85f')
-                    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-                    .setTitle(`Your article was a succes!`)
+                    .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+                    .setTitle(`Your article was a success!`)
                     .setDescription(`${r.sucess[result]}\nYou got \`${addmoniy}\` moniy.`)
-                    .setColor("GREEN")
+                    .setColor("Green")
                 m.channel.send({embeds: [fitEmbed]});
             }
                 
