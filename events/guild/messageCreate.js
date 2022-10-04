@@ -38,27 +38,32 @@ module.exports = async (Discord, client, message,) => {
     if(prefix === null) prefix = '-';
 if(!message.guild) prefix = '-'
     
-let dorkas = ['dorka', 'doda', 'kovacs', 'kovács', 'dodakovacs', 'dodakovacs2007', ]
+let dorkas = ['dorka', 'doda', 'kovacs', 'kovács', 'dodakovacs', 'dodakovacs2007', "dor"]
 
 let his = ['hi', 'hello', 'howdy', 'gday', 'hola', 'what up', 'how are you', 'how are you?', 'hi there', 'greetings', 'morning', 'afternoon', 'evening', 'hey', 'good to see you', 'great to see you', 'nice to see you', 'good afternoon, sir, how are you today?', 'good afternoon sir, how are you today?']
-    his.forEach(element => {
-        if(message.content.toLowerCase() == element.toLowerCase() && !message.author.bot){
-           return message.channel.send(his[Math.floor(Math.random() * his.length)])
-        }
-    });
+
+his.forEach(element => {
+    if(message.content.toString().toLowerCase() == element.toLowerCase())
+       return message.channel.send(his[Math.floor(Math.random() * his.length)])
+    }
+);
 
 
-    dorkas.forEach(element => {
-        if(message.content.includes(element.toLowerCase()) && !message.author.bot){
-           message.reply("ayo that gon be deleted for mentioning `$@{&[#]}`")
-           setTimeout(async () => {
-            try{
-            await message.delete()
-            }catch(err){}
-        }, 2 * 1000);
-           return
-        }
-    });
+dorkas.forEach(element => {
+    if(message.content.toLowerCase().split(" ").join("").includes(element.toLowerCase()))
+       message.reply("ayo that gon be deleted for mentioning `$@{&[#]}`")
+       setTimeout(async () => {
+        try{
+        await message.delete()
+        }catch(err){}
+    }, 2 * 1000);
+       return
+    }
+);
+
+    dorkas.forEach(element =>{
+
+})
     
     if(message.content.includes('bagel')){
         const bagel = new Discord.MessageEmbed()
