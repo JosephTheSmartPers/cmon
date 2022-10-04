@@ -1,21 +1,22 @@
-const { CategoryChannel } = require("discord.js");
+const { CategoryChannel, PermissionsBitField } = require("discord.js");
 const guildModel = require('../../models/guildSchema')
+
 module.exports = {
-    requiredPermissions: ["ADMINISTRATOR"],
+    permissions: ["ManageChannels"],
     name: 'claim',
     aliases: [],
     cooldown: 0,
     description: "Claim a ticket",
     usage: "claim",
    async execute(message, args, cmd, client, Discord) {
-       const newEmbed = new Discord.MessageEmbed()
-       .setAuthor( message.author.tag, message.author.displayAvatarURL({ dynamic: true }) )
+       const newEmbed = new Discord.EmbedBuilder()
+       .setAuthor( {name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })} )
        .setColor('#15ff00')
-       .setTitle('Clamied')
+       .setTitle('Claimed<a:Check:831956237305643069>')
        .addFields(
            {name: `Ticket clamied by: ${message.author.tag}`, value: 'Any other mods, please dont write anything here from now on'}
        )
-       .setFooter('Mod has arrived')
+       .setFooter({text: 'Mod has arrived'})
        .setTimestamp()
 
 
@@ -28,9 +29,9 @@ message.delete()
        const logs = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
        if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
 
-       const logEmbed = new Discord.MessageEmbed()
+       const logEmbed = new Discord.EmbedBuilder()
        .setColor('#e3b938')
-       .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+       .setAuthor( {name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })} )
        .setTitle(`claimed ${message.channel.name}`)
        .setTimestamp();
              logs.send({embeds: [logEmbed]})

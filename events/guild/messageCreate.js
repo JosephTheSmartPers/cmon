@@ -225,22 +225,19 @@ if(command.hasOwnProperty('permissions'))
     if(command.permissions.length){
       let invalidPerms = []
       for(const perm of command.permissions){
-          if(!validPermissions.includes(perm)){
-              return console.log(`Missing permissions! ${perm}`);
-              }
-          if(!message.member.permissions.has(perm)){
+          if(!message.member.permissions.has(Discord.PermissionsBitField.Flags[perm])){
             invalidPerms.push(perm);
               }
             }
         if (invalidPerms.length){
 
-        const permEmbed = new Discord.MessageEmbed()
+        const permEmbed = new Discord.EmbedBuilder()
         .setColor('#f23030')
         .setTitle('Invalid perms!')
         .addFields(
              {name: 'You cannot execute this command!', value: `You dont have the perm: \`${invalidPerms}\` to execute this command!`}
         )
-        .setFooter('❌')
+        .setFooter({text: '❌'})
         return message.channel.send({embeds: [permEmbed]}) 
     }
 
