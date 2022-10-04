@@ -49,15 +49,15 @@ his.forEach(element => {
 );
 
 
-dorkas.forEach(element => {
+dorkas.forEach(async element => {
     if(message.content.toLowerCase().split(" ").join("").includes(element.toLowerCase()))
-       message.reply("ayo that gon be deleted for mentioning `$@{&[#]}`")
-       setTimeout(async () => {
+    {
         try{
         await message.delete()
         }catch(err){}
-    }, 2 * 1000);
-       return
+
+        return
+    }
     }
 );
 
