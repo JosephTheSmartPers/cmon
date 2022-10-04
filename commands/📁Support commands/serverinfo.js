@@ -24,25 +24,27 @@ module.exports = {
         
             let inline = true
             let sicon = message.guild.iconURL({ dynamic: true});
-            let serverembed = new Discord.MessageEmbed()
+            let serverembed = new Discord.EmbedBuilder()
             .setColor("#00ff00")
             .setThumbnail(sicon)
-            .setAuthor(message.guild.name)
+            .setAuthor({name: message.guild.name})
             .setDescription(
               emojis.join(" ")
              )
-            .addField("🧾Name", message.guild.name, inline)
-            .addField("💳ID", message.guild.id, inline)
-            .addField("👑Owner", `<@${message.guild.ownerId}>`, inline)
-            .addField("✅Verification Level", verlvl[message.guild.verificationLevel],inline)
-            .addField("👥Members", `${message.guild.memberCount}`, inline)
-            .addField("<:Employee:849671009723351071>Roles", message.guild.roles.cache.size.toString(), inline)
-            .addField("🗨️Channels", message.guild.channels.cache.size.toString(), inline)
-            .addField("😆Emoji's", `${message.guild.emojis.cache.size}`, inline)
-            .addField("🖼Sticker's", `${message.guild.stickers.cache.size}`, inline)
-            .addField("<:Boosting:849670967755276298>Boost level", message.guild.premiumTier)
-            .addField("📅You Joined", message.member.joinedAt.toString())
-                        .setFooter(`📆Created ${message.guild.createdAt}`);
+            .addFields(
+                  {name: "🧾Name", value: `${message.guild.name}`, inline: true},
+                  {name: "💳ID", value: `${message.guildId}`, inline: true},
+                  {name: "👑Owner", value: `<@${message.guild.ownerId}>`, inline: true},
+                  {name: "✅Verification Level", value: verlvl[message.guild.verificationLevel], inline: true},
+                  {name: "👥Members", value: `${message.guild.memberCount}`, inline: true},
+                  {name: "<:Employee:849671009723351071>Roles", value: message.guild.roles.cache.size.toString(), inline: true},
+                  {name: "🗨️Channels", value: message.guild.channels.cache.size.toString(), inline: true},
+                  {name: "😆Emoji's", value: `${message.guild.emojis.cache.size}`, inline: true},
+                  {name: "🖼Sticker's", value: `${message.guild.stickers.cache.size}`, inline: true},
+                  {name: "<:Boosting:849670967755276298>Boost level", value: `${message.guild.premiumTier}`},
+                  {name: "📅You Joined", value: `${message.member.joinedAt.toString()}`},
+              )
+              .setFooter(`📆Created ${message.guild.createdAt}`);
                        
                         //for (i = 0; i < numberOfMessages; i++) {
                           message.channel.send(

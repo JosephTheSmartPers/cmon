@@ -15,9 +15,9 @@ module.exports = {
 if(!bmem){
      bmem = ":x: No banned members!"
 }
-const embed = new Discord.MessageEmbed()
-.setTitle(`📃List of banned members:`)
-.setDescription(bmem)
+            const embed = new EmbedBuilder()
+                .setTitle(`📃List of banned members:`)
+                .setDescription(bmem)
      message.channel.send({embeds: [embed]})
 }
 }

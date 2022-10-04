@@ -11,7 +11,7 @@ module.exports = async (Discord, client, emoji) => {
        .setColor('#e3b938')
         .setDescription(`**New emoji created😀** \n<:${emoji.name}:${emoji.id}> - \`:${emoji.name}:\``)
         .addFields({name: "🎞️Animated:", value: `${animated}`})
-        .setFooter(`ID: ${emoji.id}`)
+        .setFooter({text: `ID: ${emoji.id}`})
         .setTimestamp();
        logs.send({embeds: [logEmbed]})   
 }
