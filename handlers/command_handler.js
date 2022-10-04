@@ -8,8 +8,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 
 module.exports = async (client, Discord) =>{
-
-  const slashCommands = await globPromise(`E:/agoodbot/SlashCommands/*/*.js`);
+  const slashCommands = await globPromise(`${process.cwd().replace(`\\`, `/`)}/SlashCommands/*/*.js`);
 
   const arrayOfSlashCommands = [];
 
