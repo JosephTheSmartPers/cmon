@@ -21,7 +21,7 @@ module.exports = {
                 new ButtonBuilder()
                 .setCustomId("no")
                 .setLabel("No")
-                .setStyle("DANGER")
+                .setStyle("Danger")
                 .setDisabled(false)
                 
             )
