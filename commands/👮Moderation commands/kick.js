@@ -21,20 +21,20 @@ module.exports = {
                 message.reply("I don't have permissions for that!🔴")
                 return
             }
-            const kick1Embed = new Discord.MessageEmbed()
+            const kick1Embed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`has been kicked from: ${message.guild.name}🔴. For: ${reason}.`)
-            .setFooter(`By: ${message.author.username}`)
+            .setFooter({text: `By: ${message.author.username}`})
              .setTimestamp();
             message.channel.send({embeds: [kick1Embed]})
 
 
             const kickEmbed = new Discord.MessageEmbed()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`You have kicked from: ${message.guild.name}🔴`)
-             .setFooter(`Reason: ${reason}`)
+             .setFooter({text: `Reason: ${reason}`})
             member.send({embeds: [kickEmbed]});
             let lc = await guildModel.findOne({guildID: message.guildId});
             if(!lc.logschannel) return
@@ -44,7 +44,7 @@ module.exports = {
 
             const logEmbed = new Discord.MessageEmbed()
             .setColor('#e3b938')
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
             .setTitle(`kicked ${member.username} from ${message.guild.name}🔴`)
             .setFooter(reason)
             .setTimestamp();

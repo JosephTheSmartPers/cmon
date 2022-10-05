@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const { MessageButton, MessageActionRow, Client, Message} = require("discord.js")
+const { ButtonBuilder, ActionRowBuilder, Client, Message} = require("discord.js")
 //const { MessageButton } = require('discord-buttons')
 const guildModel = require('../../models/guildSchema')
 
@@ -12,13 +12,13 @@ module.exports = {
     async execute(message,args, cmd, client, Discord){
         const member = message.mentions.users.first();
         if(member){
-            const row = new MessageActionRow().addComponents(
-                new MessageButton()
+            const row = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
                 .setCustomId("yes")
                 .setLabel("Yes")
-                .setStyle("SUCCESS")
+                .setStyle("Success")
                 .setDisabled(false),
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId("no")
                 .setLabel("No")
                 .setStyle("DANGER")
@@ -48,11 +48,11 @@ module.exports = {
                 }
             if(!reason) reason = 'Unspecified';
             const memberTarger = message.guild.members.cache.get(member.id);
-            const banEmbed = new Discord.MessageEmbed()
+            const banEmbed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(member.username, member.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: member.username, iconURL: member.displayAvatarURL({ dynamic: true })})
             .setTitle(`🔨has been banned from: ${message.guild.name}.`)
-             .setFooter(`Reason: ${reason}`)
+             .setFooter({text: `Reason: ${reason}`})
              .setFooter(`By: ${message.author.username}`)
              .setTimestamp();
              ButtonInteraction.first().reply({embeds: [banEmbed]})
