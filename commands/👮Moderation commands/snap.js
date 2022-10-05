@@ -1,7 +1,7 @@
 const guildModel = require('../../models/guildSchema')
 
 module.exports = {
-    permissions: ["MANAGE_MESSAGES"],
+    permissions: ["ManageMessages"],
     name: 'snap',
     aliases: ['nuke', 'del'],
     cooldown: 0,
@@ -17,22 +17,26 @@ module.exports = {
 
         const number = args[0];
 
+        let suces = true;
+
         await message.delete()
 
         await message.channel.messages.fetch({limit: number}).then(async messages =>{
            await message.channel.bulkDelete(messages);
         }).catch(_e => {
                         channel.send('Those messages might be older than 14 days, so I cant delete them.')
+                        suces = false;
                         return
         })
-        const snapEmbed = new Discord.MessageEmbed()
-        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }) )
-        .setColor('#4be128')
-        .setTitle('Whiped out half the discord.')
-        .addFields(
-             {name: 'Succesfully snaped the discord<a:check:854289501148020747>', value: `You turned ${args[0]} messages to dust.`}
-        )
-        .setFooter('💣')
+        if(suces == true){
+        const snapEmbed = new Discord.EmbedBuilder()
+            .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+            .setColor('#4be128')
+            .setTitle('Whiped out half the discord.')
+            .addFields(
+                {name: 'Succesfully snaped the discord<a:check:854289501148020747>', value: `You turned ${args[0]} messages to dust.`}
+            )
+            .setFooter({text: '💣'})
         message.channel.send({embeds: [snapEmbed]});
         let lc = await guildModel.findOne({guildID: message.guildId});
         if(!lc.logschannel) return
@@ -40,13 +44,14 @@ module.exports = {
         const logs = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
         if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
         if(logs){
-        const logEmbed = new Discord.MessageEmbed()
-        .setColor('#e3b938')
-        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
-        .setTitle(`snapped ${number} messages in #${message.channel.name}`)
-        .setTimestamp();
-                logs.send({embeds: [logEmbed]})
+        const logEmbed = new Discord.EmbedBuilder()
+            .setColor('#e3b938')
+            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
+            .setTitle(`snapped ${number} messages in #${message.channel.name}`)
+            .setTimestamp();
+        logs.send({embeds: [logEmbed]})
 
+    }
     }
 }
 }

@@ -4,7 +4,7 @@ const guildModel = require('../../models/guildSchema')
 module.exports = {
     name: 'kick',
     cooldown: 0,
-    permissions: ["ADMINISTRATOR", "KICK_MEMBERS"],
+    permissions: ["KickMembers"],
     description: "Kick people.",
     usage: "kick <@person>",
     async execute(message, args, cmd, client, Discord){

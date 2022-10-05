@@ -4,7 +4,7 @@ const { MessageButton, MessageActionRow, Client, Message} = require("discord.js"
 const guildModel = require('../../models/guildSchema')
 
 module.exports = {
-    permissions: ["ADMINISTRATOR", "BAN_MEMBERS"],
+    permissions: ["BanMembers"],
     name: 'ban',
     cooldown: 0,
     description: "Ban people.",

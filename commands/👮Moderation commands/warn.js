@@ -9,7 +9,7 @@ const ProfileGuildModels = require('../../models/profileGuildSchema')
 module.exports = {
     name: "warn",
     description: "Warn a member",
-    aliases: ["ADMINISTRATOR", "KICK_MEMBERS", "BAN_MEMBERS"],
+    aliases: ["ManageRoles", "KickMembers"],
     cooldown: 0,
     usage: "warn <@person>",
     async execute(message,args, cmd, client, Discord, profileData) {
@@ -50,15 +50,16 @@ module.exports = {
             });
             guildProfile.save();
         
-                     const warningEmbed = new Discord.MessageEmbed()
+                     const warningEmbed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`has been been warned.`)
-             .setFooter(`Reason: ${reason}`)
+            .setFooter({text: `Reason: ${reason}`})
             await message.channel.send({embeds: [warningEmbed]})
-            const warn1Embed = new Discord.MessageEmbed()
+
+            const warn1Embed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`You have been warned in ${message.guild.name}`)
              .setFooter({text: `Reason: ${reason}`})
             user.send({embeds: [warn1Embed]})
@@ -72,18 +73,18 @@ module.exports = {
                 $inc: {warnings: 1,}
             });
             
-            const warnEmbed = new Discord.MessageEmbed()
+            const warnEmbed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`has been been warned.`)
-             .setFooter(`Reason: ${reason}\nThis is his *${data.warnings + 1}.* warn`)
+             .setFooter({text: `Reason: ${reason}\nThis is his *${data.warnings + 1}.* warn`})
             await message.channel.send({embeds: [warnEmbed]})
 
-            const warn1Embed = new Discord.MessageEmbed()
+            const warn1Embed = new Discord.EmbedBuilder()
             .setColor('#fff85f')
-            .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
             .setTitle(`You have been warned in ${message.guild.name}`)
-             .setFooter(`Reason: ${reason}`)
+            .setFooter({text: `Reason: ${reason}`})
             user.send({embeds: [warn1Embed]})
             if(data.warnings + 1 == 3) { 
                 r = await message.channel.send(`${user} has already reached three warnings \nBanning in 5...`)
@@ -99,11 +100,11 @@ module.exports = {
             if(!lc) return
             const logs = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
             if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
-            const logEmbed = new Discord.MessageEmbed()
+            const logEmbed = new Discord.EmbedBuilder()
             .setColor('#e3b938')
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
             .setTitle(`warned ${user.username}`)
-            .setFooter(reason)
+            .setFooter({text: `Reason: ${reason}`})
             .setTimestamp();
             logs.send({embeds: [logEmbed]})
            

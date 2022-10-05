@@ -6,7 +6,7 @@ module.exports = {
     description: "Tells info about the bots setup on the server.",
     aliases: [],
     cooldown: 0,
-    permisssions: ["MANAGE_SERVER"],
+    permisssions: ["ManageMessages"],
     usage: "info",
 
     async execute(message, args, cmd, client, Discord) {
@@ -104,7 +104,7 @@ if(!wrole){
     
     i.push('\`❌None\`')
 }
-const embed = new Discord.MessageEmbed()
+const embed = new Discord.EmbedBuilder()
 .setTitle('Info about the servers custom stuff.')
 .addFields(
     {name: '👋Leaves channel', value: a.join(" "), inline},
@@ -117,7 +117,7 @@ const embed = new Discord.MessageEmbed()
     {name: '👋Welcome channel', value: h.join(" "), inline},
     {name: '🏅Welcome role', value: i.join(" "), inline}
 )
-.setColor('YELLOW')
+.setColor('Yellow')
 message.channel.send({embeds: [embed]})
     }
 }

@@ -4,7 +4,6 @@ module.exports = {
     name: 'banlist',
     aliases: [],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Displays a list of banned people',
     usage: "banlist",
      async execute(message, args, cmd, client, Discord, profileData){

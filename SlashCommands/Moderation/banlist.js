@@ -3,6 +3,7 @@ const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction }
 module.exports = {
     ...new SlashCommandBuilder()
     .setName("banlist")
+    .setDMPermission(false)
     .setDescription("Shows a list of banned people."),
 
     run: async (client, interaction, args) => {

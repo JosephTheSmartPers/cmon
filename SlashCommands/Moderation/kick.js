@@ -8,6 +8,7 @@ module.exports = {
     ...new SlashCommandBuilder()
     .setName("kick")
     .setDescription("Kick someone.")
+    .setDMPermission(false)
     .addUserOption(option => option.setName('user').setRequired(true).setDescription('Who u wanna kick🔴?'))
     .addStringOption(option => option.setName('reason').setDescription('Reason for kick.'))
     .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers), 

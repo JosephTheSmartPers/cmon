@@ -5,7 +5,8 @@ module.exports = {
     ...new SlashCommandBuilder()
     .setName("claim")
     .setDescription("Claim a ticket.")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Speak),
+    .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
     run: async (client, interaction, args) => {
 
         let user = interaction.user

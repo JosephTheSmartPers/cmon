@@ -16,12 +16,11 @@ module.exports = {
         let warningss
         if(!userdata || userdata.warnings == null) warningss = 0;
         else warningss = userdata.warnings
-        const warningsEmbed = new Discord.MessageEmbed()
-        .setColor('#fff85f')
-        .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
-        .setTitle(`has ${warningss} warning(s)`)
-         .setFooter(`IDK the reasons tho`)
-        message.channel.send({embeds: [warningsEmbed]});
+         const warningsEmbed = new Discord.EmbedBuilder()
+             .setColor('#fff85f')
+             .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
+             .setTitle(`has ${warningss} warning(s)`)
+         message.channel.send({embeds: [warningsEmbed]});
 
     }
 }

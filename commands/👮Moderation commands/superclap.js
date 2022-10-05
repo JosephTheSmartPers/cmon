@@ -1,9 +1,9 @@
 const Discord = require('discord.js')
-const { MessageButton, MessageActionRow, Client, Message} = require("discord.js")
+const { Client, Message} = require("discord.js")
 //const { MessageButton } = require('discord-buttons')
 const guildModel = require('../../models/guildSchema')
 module.exports = {
-    permissions: ["MANAGE_CHANNELS"],
+    permissions: ["ManageChannels", "Administrator", "ManageGuild"],
     name: 'superclap',
     aliases: [],
     cooldown: 0,
@@ -18,16 +18,16 @@ module.exports = {
     if(issoma() == true) return message.reply("Hehe you tought.")
     else{
     if(message.guild){
-        const row = new MessageActionRow().addComponents(
-            new MessageButton()
+        const row = new Discord.ActionRowBuilder().addComponents(
+            new Discord.ButtonBuilder()
             .setCustomId("yes")
             .setLabel("Yes✅")
-            .setStyle("SUCCESS")
+            .setStyle("Success")
             .setDisabled(false),
-            new MessageButton()
+            new Discord.ButtonBuilder()
             .setCustomId("no")
             .setLabel("No❌")
-            .setStyle("DANGER")
+            .setStyle("Danger")
             .setDisabled(false)
             
         )
@@ -60,11 +60,11 @@ collector.on("end", async (ButtonInteraction) => {
                                 if(!logs) return
                                 if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
                                 
-                                        const logEmbed = new Discord.MessageEmbed()
+                                        const logEmbed = new Discord.EmbedBuilder()
                                         .setColor('#e3b938')
-                                        .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+                                        .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
                                         .setDescription(`**<@!${message.author.id}> deleted the channel #${message.channel.name} :wastebasket: **`)
-                                        .setFooter(`Channel ID:** ${message.channel.id}`)
+                                        .setFooter({text: `Channel ID:** ${message.channel.id}`})
                                         .setTimestamp();
                                                 logs.send({embeds: [logEmbed]})
     }

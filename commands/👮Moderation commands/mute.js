@@ -4,7 +4,7 @@ const guildModel = require('../../models/guildSchema')
 module.exports = {
     name: 'mute',
     cooldown: 0,
-    permisssions: ["ADMINISTRATOR"],
+    permisssions: ["ManageRoles"],
     description: "Mute people.",
     usage: 'mute <@person> [time]',
    async execute(message, args, cmd, client, Discord){
@@ -22,8 +22,12 @@ module.exports = {
             let memberTarget= message.guild.members.cache.get(target.id);
 
             if(!args[1]){
+            try{
                 memberTarget.roles.remove(mainRole.id);
                 memberTarget.roles.add(muteRole.id);
+                        }catch(err){
+                            return message.reply("I don't have permissions to change roles ):")
+                        }
                 message.channel.send(`🔇<@${memberTarget.user.id}> got muted, he aint talkin no more.`);
                 
                 let lc = await guildModel.findOne({guildID: guildIDD});
@@ -32,9 +36,9 @@ module.exports = {
                 const logss = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
                 if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
     
-                const logEmbed = new Discord.MessageEmbed()
+                const logEmbed = new Discord.EmbedBuilder()
                 .setColor('#e3b938')
-                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+                .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
                 .setTitle(`🔇muted ${target.username}`)
                 .setTimestamp();
                           logss.send({embeds: [logEmbed]})
@@ -56,9 +60,9 @@ module.exports = {
  const logss = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
  if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
 
-            const logEmbed = new Discord.MessageEmbed()
+            const logEmbed = new Discord.EmbedBuilder()
             .setColor('#e3b938')
-            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+            .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
             .setTitle(`🔇muted ${target.username} for ⏰${args[1]}`)
             .setTimestamp();
                       logss.send({embeds: [logEmbed]})

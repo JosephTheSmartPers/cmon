@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: 'dm',
   aliases: [],
-  permissions: ["ADMINISTRATOR"],
+  permissions: ["Administrator"],
   cooldown: [0],
   description: 'spam dms',
   usage: "dm <@person> <text>",

@@ -3,7 +3,7 @@ const guildModel = require('../../models/guildSchema')
 
 module.exports = {
     name: "delwarn",
-    permissions: ["ADMINISTRATOR"],
+    permissions: ["ManageRoles"],
     aliases: ["deletewarn", "deletewarns"],
     cooldown: 0,
     description: "Delete a member's warnings",
@@ -14,8 +14,6 @@ module.exports = {
         const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
 
         if(!user) return message.channel.send('Ya didnt mention anyone m8❗');
-
-        if(user.bot) return message.channel.send('SOMEONE ARREST THIS MAN HE TRYNA WARN BOTS!👮');
 
         if(user.id === message.author.id) return message.channel.send('Wait you cant clear ya own warnings hehe:x:');
 
@@ -47,11 +45,11 @@ module.exports = {
             $set: {warnings: 0,}
         });
 
-        const delwarnEmbed = new Discord.MessageEmbed()
+        const delwarnEmbed = new Discord.EmbedBuilder()
         .setColor('#fff85f')
-        .setAuthor(user.username, user.displayAvatarURL({ dynamic: true }))
+        .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ dynamic: true })})
         .setTitle(`has been cleared of all his warns<a:Check:831956237305643069>.`)
-         .setFooter(`By: ${message.author.username}`)
+         .setFooter({text: `By: ${message.author.username}`})
          message.channel.send({embeds: [delwarnEmbed]})
          let lc = await guildModel.findOne({guildID: message.guildId});
          if(!lc.logschannel) return
@@ -59,9 +57,9 @@ module.exports = {
          const logs = message.guild.channels.cache.find(channel => channel.name === lc.logschannel)
          if(lc.logschannel === null || lc.logschannel == "" || !lc.logschannel) return
 
-         const logEmbed = new Discord.MessageEmbed()
+         const logEmbed = new Discord.EmbedBuilder()
          .setColor('#e3b938')
-         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true}))
+         .setAuthor({name: message.author.username, iconURL: message.author.displayAvatarURL({ dynamic: true})})
          .setTitle(`deleted all the warns of ${user.username}`)
          .setTimestamp();
                logs.send({embeds: [logEmbed]})
