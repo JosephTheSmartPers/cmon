@@ -15,7 +15,7 @@ module.exports = {
         const songSug = await interaction.options.getString("song")
         let user = interaction.user
 
-        interaction.reply(`Searching the internet for \`${songSug}\` ${emoji}`)
+        interaction.reply(`Searching the internet for \`${songSug}\` <a:loading:1026905223031173150>`)
 
         let embed = new EmbedBuilder().setColor('Random').setFooter({text: `Requested by ${user.tag}`, iconURL: user.displayAvatarURL()}); // Constructing the embed
         let lyric = await lyrics(songSug); // Searching for the lyrics on Google

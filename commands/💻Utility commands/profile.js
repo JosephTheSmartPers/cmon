@@ -9,9 +9,9 @@ module.exports = {
           async execute(message,args, cmd, client, Discord, profileData){
             const user = message.mentions.users.first() || message.author;
               
-              const newEmbed = new Discord.MessageEmbed()
+              const newEmbed = new Discord.EmbedBuilder()
               .setColor('#00ffec')
-              .setFooter(`🖼️Profile of ${user.tag}`)
+            .setFooter({text: `🖼️Profile of ${user.tag}`})
               .setImage(user.displayAvatarURL({ dynamic: true}))
        
       

@@ -16,7 +16,7 @@ let haste = args.slice(0).join(" ")
         if (!args[0]) { return msg.channel.send("What do you want to post in Hastebin?") }
 
         hastebin(haste).then(r => {
-const embed = new Discord.MessageEmbed()
+const embed = new Discord.EmbedBuilder()
             .setTitle(`📁Posted to Hastebin at this URL`)
             .setURL(r)
 message.channel.send({embeds: [embed]})

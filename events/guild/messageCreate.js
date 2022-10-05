@@ -66,7 +66,7 @@ dorkas.forEach(async element => {
 })
     
     if(message.content.includes('bagel')){
-        const bagel = new Discord.MessageEmbed()
+        const bagel = new Discord.EmbedBuilder()
         .setTitle('Bagel has arrived')
         .setImage('https://cdn.loveandlemons.com/wp-content/uploads/2020/05/bagel-recipe.jpg')
         .setThumbnail('https://cdn.loveandlemons.com/wp-content/uploads/2020/05/bagel-recipe.jpg')
@@ -372,13 +372,13 @@ time_stamps.set(message.author.id, current_time);
 
     command.execute(message, args, cmd, client, Discord, profileData);
 } catch (err){
-    const errEmbed = new Discord.MessageEmbed()
+    const errEmbed = new Discord.EmbedBuilder()
     .setColor('#e10000')
     .setTitle('Error!')
     .addFields(
          {name: 'Barnibot entered an error trying to execute this command', value: 'We are sorry for the inconvinience.'}
     )
-    .setFooter('🛑')
+    .setFooter({text: '🛑'})
     message.channel.send({embeds: [errEmbed]});
 }
 

@@ -5,28 +5,30 @@ module.exports = {
     aliases: ['mc', 'checkserver', 'serverstatus'],
     description: 'Logs if your minecraft server is on or not.',
     usage: 'mc <server.ip> <port>',
-    execute(message, args, cmd, client, Discord){
+    async execute(message, args, cmd, client, Discord){
         if(!args[0]) return message.reply('you have to enter a **valid** ip, or dis aint working.');
         if(!args[1]) return message.reply(' please specify the port (default is **25565**)');
 
-        util.status(args[0], {port: parseInt(args[1])}).then((response) =>{
+        let msg = await message.channel.send(`Searching minecraft for \`${args[0]}\` <a:loading:1026905223031173150>`)
+
+        util.status(args[0], parseInt[args[1]]).then((response) =>{
             console.log(response);
-                 const embed = new Discord.MessageEmbed()
+                 const embed = new Discord.EmbedBuilder()
             .setColor('#4ce100')
             .setTitle('Minecraft server status')
-            .addFields(
-            {name: 'Server IP📋', value: response.host},
-            {name: 'Online players🟢', value: response.onlinePlayers},
-            {name: 'Max Players👥', value: response.maxPlayers},
-            {name: 'Version🆚', value: response.version},
-            {name: 'Description📖', value: response.description}
-                    )
+                .addFields(
+                    {name: 'Server IP📋', value: `${args[0]}`},
+                    {name: 'Online players🟢', value: `${response.players.online}`},
+                    {name: 'Max Players👥', value: `${response.players.max}`},
+                    {name: 'Version🆚', value: `${response.version.name}`},
+                    {name: 'Description📖', value: `${response.motd.clean}`}
+                )
       
         
-            message.channel.send({embeds: [embed]});
+            msg.edit({content: "",embeds: [embed]});
             })
         .catch ((error) =>{
-            message.channel.send(`❗There was an error finding ${args[0]}❗`);
+            msg.edit(`❗There was an error finding ${args[0]}❗`);
             throw error;
         })
     }

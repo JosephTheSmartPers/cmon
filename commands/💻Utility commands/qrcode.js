@@ -9,9 +9,10 @@ module.exports = {
     async execute(message, args, cmd, client, Discord){
         let qrcode = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${args.join("%20")}`
         console.log(qrcode)
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
         .setTitle("Scan this!")
         .setImage(qrcode)
+        .setColor("NotQuiteBlack")
         message.channel.send({embeds: [embed]})
         try{
             message.delete()

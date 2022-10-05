@@ -16,12 +16,14 @@ module.exports = {
         res = urban(thing);
 
 res.first(function(json) {
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
     .setTitle(`Results for *${thing}*`)
-    .addField("Definition", json.definition)
-    .addField("Example", json.example)
-    .setFooter(`Published on ${json.written_on}`)
-    .setColor("ORANGE")
+                .addFields(
+                    {name: "Definition", value: json.definition},
+                    {name: "Example", value: json.example}
+                )
+                .setFooter({text: `Published on ${json.written_on}`})
+    .setColor("Orange")
     message.channel.send({embeds: [embed]})
 });
 

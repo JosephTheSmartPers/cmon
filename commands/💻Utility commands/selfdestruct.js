@@ -17,8 +17,13 @@ module.exports = {
 
             const string = args.slice(1).join(" ")
       
-            await message.channel.send(`${message.author.username}: ${string.replace("-a","")} \n*(deleted in ${args[0]} seconds)* `).then((msg) => {
-                setTimeout(() => msg.delete(), delnum);
+            await message.channel.send(`**${message.author.username}:** ${string.replace("-a","")} \n*(deleted in ${args[0]} seconds)* `).then((msg) => {
+                setTimeout(async () => {
+                            await message.channel.send('Message deleted here, A message has been deleted here due to a selfdestruct command!')
+                            await message.channel.messages.fetch({limit: '2'}).then(async messages =>{
+                                await message.channel.bulkDelete(messages);
+                            });
+                }, delnum);
             })
             
         }

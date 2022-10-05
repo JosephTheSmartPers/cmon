@@ -10,7 +10,8 @@ module.exports = {
         if(!args[1]) return message.reply('You need to specify a sign for the second argument:x:.')
         if(!args[2]) return message.reply('You need to specify a number for the third argument:x:.')
         
-        
+        let num1 = parseInt(args[0])
+        let num2 = parseInt(args[2])
        
 
       
@@ -19,23 +20,14 @@ module.exports = {
             const result = (args[0]) * (args[2])
 
             message.channel.send(`Your result is ${result}`)
-        } else if (args[1] === ":") {
+        } else if (args[1] === "/") {
             types = 1
             const result = (args[0]) / (args[2])
 
             message.channel.send(`Your result is ${result}`)
         } else if (args[1] === "+") {
-            types = 2
-            const one = args[0]
-            const two = args[2]
-         const res1 = (one * two) * 2
-         console.log(res1)
-         const res2 = two * (one -1)
-         console.log(res2)
-         const res3 = two * (one - 1)
-         console.log(res3)
-         const res4 = res1 - res2
-         const res5 = res4 - res3
+            let res5 = num1
+            res5 = res5 + parseInt(num2)
             message.channel.send(`Your result is ${res5}`)
         } else if (args[1] === "-") {
 

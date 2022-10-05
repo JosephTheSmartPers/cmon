@@ -7,21 +7,20 @@ module.exports = {
   usage: "poll help",
   async execute(message,args, cmd, client, Discord) {
     if(args[0] == "help"){
-      const helpEmbed = new Discord.MessageEmbed()
+      const helpEmbed = new Discord.EmbedBuilder()
       .setTitle("How to create a poll?")
       .setDescription("`poll <title>\n<emoji> = <option descripton>`")
-      .setColor("ORANGE")
+      .setColor("Orange")
       message.channel.send({embeds: [helpEmbed]})
       return
     } 
     const { content } = message
     const eachLine = content.split('\n')
-    console.log(eachLine)
     if(!eachLine[1]) return message.reply(':x:Ya need to put anoda line for the option.')
     if(!message.content.includes('=')) return message.reply('You need to put a "**=**" between the emoji and the option.')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
     .setTitle(eachLine[0].replace('-poll', ' '))
-    .setColor("BLUE")
+    .setColor("Blue")
     
        for (const line of eachLine) {
         if (line.includes('=')) {
@@ -33,16 +32,16 @@ module.exports = {
            
             
             
-                embed.addField(emoji, content, true)
+                embed.addFields({name: emoji, value: content, inline: true})
                        }
         
     }
     message.channel.send({embeds: [embed]}).then((msg) =>{
       let i = 1
         for (const line of content.split('\n')) {
-          if(i == 2){
+          if(i > 1){
             const split = line.split('=')
-            const emoji = split[1].trim()
+            const emoji = split[0].trim()
             console.log(emoji)
             msg.react(emoji)
           }

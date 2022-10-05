@@ -1,0 +1,48 @@
+const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js")
+const guildModel = require('../../models/guildSchema')
+
+import('chalk');
+const {Command} = require('sylphy');
+const imdb = require('imdb-api');
+
+module.exports = {
+    ...new SlashCommandBuilder()
+    .setName("imdb")
+    .setDescription("Search for a movie.")
+    .addStringOption(option => option.setName("movie").setDescription("The movie you wanna search for.").setRequired(true)),
+
+    run: async (client, interaction, args) => {
+
+        const searchMovie = interaction.options.getString("movie")
+        console.log(searchMovie)
+        let movie 
+        imdb.get({name: 'The Toxic Avenger'}, {apiKey: '5a16adc7', timeout: 30000}).then(console.log)
+
+        /*let imdbemb = new EmbedBuilder()
+            .setColor("#00ff00")
+            .setTitle(movie.title)
+            .setURL(movie.imdburl)
+            .setDescription(movie.plot)
+            .setThumbnail(movie.poster)
+            .addFields(
+                {name: "💯Rate", value: `${movie.rating}/10`, inline: true},
+                {name: "⏲️Time", value: movie.runtime, inline: true},
+                {name: "🏅Awards", value: movie.awards, inline: true},
+                {name: "📚Langueages", value: movie.languages, inline: true},
+                {name: "🎥Genres", value: movie.genres, inline: true},
+                {name: "🔞Recomended age", value: movie.rated, inline: true},
+                {name: "🌐Coutry", value: movie.country, inline: true},
+                {name: "🎬Production:", value: `${movie.production}`, inline: true},
+                {name: "📥Votes:", value: movie.votes.toString(), inline: true},
+                {name: "💰Income", value: `${movie.boxoffice}`, inline: true},
+                {name: "📃Writer", value: movie.writer, inline: true},
+                {name: "📢Director", value: movie.director, inline: true},
+                {name: "📅Released", value: `${movie.released}`},
+                {name: "👥Actors", value: movie.actors }
+            )
+
+        interaction.reply({embeds: [imdbemb]})
+*/
+	}
+}
+
