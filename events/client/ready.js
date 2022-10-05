@@ -8,13 +8,12 @@ const util = require('minecraft-server-util');
 const guildId = '826787118104838184'
 const WOKCommands = require('wokcommands')
 
-module.exports = async (client) =>{
+module.exports = async (Discord, client, message) =>{
 
   
-
-
+    let channel = await client.channels.cache.find(channel => channel.id == "957553977896095764")
+    channel.send("BarniBot online!")
     console.log(`BarniBot is online`)
-    client.channels.cache.get(channel => channel.id == "957553977896095764").send("BarniBot online!")
     client.user.setActivity(`-help | ${client.guilds.cache.size} servers`, {type:"LISTENING"})
     offline(Discord, client)
 
