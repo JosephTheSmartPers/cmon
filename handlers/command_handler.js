@@ -4,6 +4,8 @@ const { promisify } = require("util");
 const globPromise = promisify(glob)
 require('dotenv').config();
 
+const ready = require("../events/client/ready.js")
+
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 
@@ -35,6 +37,8 @@ module.exports = async (client, Discord) =>{
 
 client.on('ready', async (client) => {
  
+  ready(client)
+
   try {
 		console.log(`Started refreshing ${arrayOfSlashCommands.length} application (/) commands.`);
 
