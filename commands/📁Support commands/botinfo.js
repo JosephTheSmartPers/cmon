@@ -1,10 +1,7 @@
 const Discord = require('discord.js')
 const os = require('os')
 const cpuStat = require("cpu-stat");
-
-    
-   
-               
+           
 module.exports = {
     name: 'botinfo',
     aliases: [],
@@ -35,7 +32,7 @@ module.exports = {
                 {name: "Invite", value: `[Click here for invite.](https://discord.com/oauth2/authorize?client_id=836893540427759646&scope=bot&permissions=8589934591)`, inline: true},
                 {name: "📆Created On", value: `${client.user.createdAt.toString()}`}
         )
-                .setFooter({text: `ℹ️Information about: ${client.user.username}. Developed by: Barni#0811`})
+        .setFooter({text: `ℹ️Information about: ${client.user.username}. Developed by: Barni#0811`})
        
         message.channel.send({embeds: [botembed]});
      }
