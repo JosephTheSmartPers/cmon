@@ -29,7 +29,7 @@ module.exports = async (client, Discord) =>{
     });
 
     const clientId = "836893540427759646"
-    const guildId = "854979654661832714"
+    const guildId = "765863431504134154"
 
     const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
