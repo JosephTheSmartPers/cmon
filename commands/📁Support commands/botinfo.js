@@ -6,7 +6,6 @@ module.exports = {
     name: 'botinfo',
     aliases: [],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Shows info about a bot!',
     usage: "botinfo",
      async execute(message, args, cmd, client, Discord, profileData){
