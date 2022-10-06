@@ -12,7 +12,7 @@ module.exports = {
     async execute(message, args, cmd, client, Discord){
 let countries = args.join(" ");
 
-const noArgs = new Discord.MessageEmbed()
+const noArgs = new Discord.EmbedBuilder()
 .setTitle('Missing args!')
 .setColor(0XFF0000)
 .setDescription('Incorrect format, do it like this: **-covid <country> or -covid all**')
