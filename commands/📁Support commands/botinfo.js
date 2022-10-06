@@ -30,7 +30,7 @@ module.exports = {
                 {name: "⚙️Commands", value: `${client.commands.size}`, inline: true},
                 {name: "• Discord.js", value: `v${version}`, inline: true},
                 {name: "Invite", value: `[Click here for invite.](https://discord.com/oauth2/authorize?client_id=836893540427759646&scope=bot&permissions=8589934591)`, inline: true},
-                {name: "📆Created On", value: `${client.user.createdAt.toString()}`}
+                {name: "📆Created On", value: `${client.user.createdAt.toString()}`},
         )
         .setFooter({text: `ℹ️Information about: ${client.user.username}. Developed by: Barni#0811`})
        
