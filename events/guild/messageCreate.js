@@ -38,7 +38,7 @@ module.exports = async (Discord, client, message,) => {
     if(prefix === null) prefix = '-';
 if(!message.guild) prefix = '-'
     
-let dorkas = ['dorka', 'doda', 'kovacs', 'kovács', 'dodakovacs', 'dodakovacs2007', "dor", "drka"]
+let dorkas = ['lilla']
 
 let his = ['hi', 'hello', 'howdy', 'gday', 'hola', 'what up', 'how are you', 'how are you?', 'hi there', 'greetings', 'morning', 'afternoon', 'evening', 'hey', 'good to see you', 'great to see you', 'nice to see you', 'good afternoon, sir, how are you today?', 'good afternoon sir, how are you today?']
 
