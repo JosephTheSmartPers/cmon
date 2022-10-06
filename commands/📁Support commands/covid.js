@@ -27,11 +27,13 @@ fetch('https://covid19.mathdro.id/api')
             let recovered = data.recovered.value.toLocaleString()
             let deaths = data.deaths.value.toLocaleString()
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
             .setTitle('Worldwide🌐 covid19 stats')
-            .addField(`Confirmed cases🧪`, confirmed)
-            .addField(`Recovered people🩹`, recovered)
-            .addField(`Passed away people⚰️`, deaths)
+            .addFields(
+                {name: `Confirmed cases🧪`, value: confirmed},
+                {name: `Recovered people🩹`, value: recovered},
+                {name: `Passed away people⚰️`, value: deaths}
+            )
 
             message.channel.send({embeds: [embed]});
         })
@@ -43,11 +45,13 @@ fetch('https://covid19.mathdro.id/api')
             let recovered = data.recovered.value.toLocaleString()
             let deaths = data.deaths.value.toLocaleString()
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
             .setTitle(`${countries} covid19 stats`)
-            .addField(`Confirmed cases🧪:`, `${confirmed}`)
-            .addField(`Recovered people🩹:`, `${recovered}`)
-            .addField(`Passed away people⚰️`, `${deaths}`)
+            .addFields(
+                {name: `Confirmed cases🧪`, value: confirmed},
+                {name: `Recovered people🩹`, value: recovered},
+                {name: `Passed away people⚰️`, value: deaths}
+            )
 
             message.channel.send({embeds: [embed]});
         }).catch(e => {
