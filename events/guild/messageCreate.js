@@ -43,7 +43,7 @@ let dorkas = ['lilla']
 let his = ['hi', 'hello', 'howdy', 'gday', 'hola', 'what up', 'how are you', 'how are you?', 'hi there', 'greetings', 'morning', 'afternoon', 'evening', 'hey', 'good to see you', 'great to see you', 'nice to see you', 'good afternoon, sir, how are you today?', 'good afternoon sir, how are you today?']
 
 his.forEach(element => {
-    if(message.content.toString().toLowerCase() == element.toLowerCase())
+    if(message.content.toString().toLowerCase() == element.toLowerCase() && !message.author.bot)
        return message.channel.send(his[Math.floor(Math.random() * his.length)])
     }
 );

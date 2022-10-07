@@ -11,7 +11,7 @@ module.exports = {
     const msg = await message.channel.send('Loading...');
     const endMessagePing = Date.now() - messagePing; // end of message sent
 
-    const embed = new MessageEmbed() // build message embed
+    const embed = new EmbedBuilder() // build message embed
       .setDescription(
         `
         Database ping data:
