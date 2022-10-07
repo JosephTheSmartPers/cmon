@@ -7,7 +7,6 @@ module.exports = {
     name: 'covid',
     aliases: ['corona', 'covid19'],
     cooldown: 5,
-    permissions: [],
     description: "See covid stats by a smiple command",
     usage: "covid <country/all>",   
     async execute(message, args, cmd, client, Discord){
