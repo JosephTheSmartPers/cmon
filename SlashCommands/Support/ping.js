@@ -8,7 +8,7 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         var hosts = ['192.168.1.1', 'google.com', 'yahoo.com'];
-        const messagePing = await Date.now();
+        let messagePing = await Date.now();
        
         
         let now = ""
@@ -21,10 +21,14 @@ module.exports = {
             });
             return thing
         });
-        now = Date.now() - messagePing;
+        
     }
+
     let endMessagePing = ""
     await interaction.reply(`Loading <a:loading:1026905223031173150>`)
+    now = Date.now() - messagePing;
+
+    messagePing = await Date.now();
         await seeping().then(async ()=>{
             endMessagePing = Date.now() - messagePing;
         })
@@ -33,12 +37,14 @@ module.exports = {
         .setDescription(
           `
           Database ping data:
-          - Avrage ping📈: \`${(now + endMessagePing) / 2}ms\`
+          - Fetch ping🔍: \`${(endMessagePing)}ms\`
+          - Message ping💬: \`${(now)}ms\`
+          - Average ping📈: \`${(now + endMessagePing) / 2}ms\`
         `
         )
         .setColor('Green')
         .setTimestamp();
-        interaction.editReply({embeds: [embed]})
+        interaction.editReply({content: "", embeds: [embed]})
         
 	}
 }

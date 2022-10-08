@@ -10,7 +10,7 @@ module.exports = {
     async execute(message, args, cmd, client, Discord){
 
         const target = message.mentions.users.first();
-if(!args.length) return message.channel.send(':x:You need to mention someone to give a role to!');
+if(!target) return message.channel.send(':x:You need to mention someone to give a role to!');
 const role = args.slice(1).join(" ");
 
 let roletarget = message.guild.roles.cache.find(role => role.name === args[1]);

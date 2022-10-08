@@ -1,31 +1,51 @@
 const { MessageEmbed } = require('discord.js');
+var ping = require('ping');
+
 module.exports = {
   name: 'ping',
   aliases: [],
-  permissions: ["SPEAK"],
   cooldown: [0],
   description: 'Get bot ping.',
   usage: 'ping',
   async execute(message, args, cmd, client, Discord) {
-    const messagePing = Date.now(); // start before message sent
-    const msg = await message.channel.send('Loading...');
-    const endMessagePing = Date.now() - messagePing; // end of message sent
+var hosts = ['192.168.1.1', 'google.com', 'yahoo.com'];
+        let messagePing = await Date.now();
 
-    const embed = new EmbedBuilder() // build message embed
-      .setDescription(
+
+        let now = ""
+       async function seeping(){
+        await hosts.forEach(async function(host){
+            let thing = ""
+            await ping.sys.probe(host, async function(isAlive){
+                var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+                thing += msg
+            });
+            return thing
+        });
+
+    }
+
+    let endMessagePing = ""
+   let msg = await message.channel.send(`Loading <a:loading:1026905223031173150>`)
+    now = Date.now() - messagePing;
+
+    messagePing = await Date.now();
+        await seeping().then(async ()=>{
+            endMessagePing = Date.now() - messagePing;
+        })
+
+        const embed = new Discord.EmbedBuilder() // build message embed
+        .setDescription(
+          `
+          Database ping data:
+          - Fetch ping🔍: \`${(endMessagePing)}ms\`
+          - Message ping💬: \`${(now)}ms\`
+          - Average ping📈: \`${(now + endMessagePing) / 2}ms\`
         `
-        Database ping data:
-        - Fetch ping🔍: \`${Math.floor(Math.random() * 30)+ 10}ms\`
-        - Wright ping📝: \`${Math.floor(Math.random() * 30)+ 10}ms\`
-        - Avrage ping📈: \`${Math.floor(Math.random() * 30)+ 10}ms\`
-        Message ping💬: \`${Math.floor(Math.random() * 30)+ 10}ms\`
-      `
-      )
-      .setColor('GREEN')
-      .setTimestamp();
-
-    msg.edit({embeds: [embed],
-    }); // edit message content
+        )
+        .setColor('Green')
+        .setTimestamp();
+        msg.edit({content: "", embeds: [embed]})
   },
 };
 

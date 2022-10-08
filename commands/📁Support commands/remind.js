@@ -16,9 +16,9 @@ module.exports = {
 
 
 
-            const remindEmbed = new Discord.MessageEmbed()
+            const remindEmbed = new Discord.EmbedBuilder()
     .setColor('#22ff00')
-    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
     .setTitle(`⏰Reminder set for ${ms(ms(args[0]))}!`)
      .setDescription(`Reminder: ${remider}`)
      .setTimestamp()
@@ -26,9 +26,9 @@ module.exports = {
 
             setTimeout(function(){
 
-                const remind0Embed = new Discord.MessageEmbed()
+                const remind0Embed = new Discord.EmbedBuilder()
                 .setColor('#22ff00')
-                .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+                .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
                 .setTitle(`⏰Your reminder has expired for ${ms(ms(args[0]))}!`)
                  .addFields(
                      {name: `Reminder:`, value: `<@${message.author.id}> ${remider}`}

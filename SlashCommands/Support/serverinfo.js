@@ -1,13 +1,13 @@
-const Discord = require('discord.js');
-const { min } = require('moment');
+const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js")
+
 module.exports = {
-    name: 'serverinfo',
-    aliases: [],
-    cooldown: 0,
-    description: 'Shows info about the server!',
-    usage: "serverinfo",
-     async execute(message, args, cmd, client, Discord, profileData){
-       if(!message.guild) return message.reply("You can't use this command in **DM**'s❗")
+    ...new SlashCommandBuilder()
+    .setName("serverinfo")
+    .setDescription("Shows info about the server.")
+    .setDMPermission(false),
+
+    run: async (client, interaction, args) => {
+        const message = await interaction
         const verlvl = {
             '0': "None",
             '1': "Low",
@@ -20,11 +20,11 @@ module.exports = {
             return `**|** ${e} **-** \`:${e.name}:\``;
            });
            const numberOfMessages = Math.ceil(emojis.length / charactersPerMessage);
-        
+
             let inline = true
             let sicon = message.guild.iconURL({ dynamic: true});
-            let serverembed = new Discord.EmbedBuilder()
-.setColor("#00ff00")
+            let serverembed = new EmbedBuilder()
+            .setColor("#00ff00")
             .setThumbnail(sicon)
             .setAuthor({name: message.guild.name})
             .addFields(
@@ -44,10 +44,11 @@ module.exports = {
               .setFooter({text: `📆Created ${message.guild.createdAt}`});
                        
                         //for (i = 0; i < numberOfMessages; i++) {
-                          message.channel.send(
+                          interaction.reply(
                             {embeds: [serverembed]}
                            
                           );
-                         //}
-     }
-    }
+
+	}
+}
+

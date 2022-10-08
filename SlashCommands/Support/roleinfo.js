@@ -1,27 +1,22 @@
-const Discord = require('discord.js')
+const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js")
 
 module.exports = {
-    name: 'roleinfo',
-    aliases: ['ri '],
-    cooldown: 0,
-    permissions: [],
-    description: 'Shows info about a role!',
-    usage: "roleinfo <role name>",
-     async execute(message,args, cmd, client, Discord){
-        const inline = true
-        if(!message.guild) return message.reply("You can't use this command in **DM**'s❗")
-        let gRole = message.mentions.roles.first() || message.guild.roles.cache.find(role => role.name === args.join(" "))
+    ...new SlashCommandBuilder()
+    .setName("roleinfo")
+    .setDescription("See a bunch of information about a role.")
+    .setDMPermission(false)
+    .addRoleOption(option => option.setName("role").setDescription("The role you want to see info bout.").setRequired(true)),
 
-        if(!gRole) return message.reply("Specify a role❗");
+    run: async (client, interaction, args) => {
 
-        if(!gRole) return message.reply("Couldn't find that role❗");
+        
+        let gRole = args.getRole("role")
     
         const status = {
             false: "❌No",
             true: "✅Yes"
           }
-        console.log(gRole.iconURL())
-        let roleemebed = new Discord.EmbedBuilder   ()
+        let roleemebed = new EmbedBuilder()
         .setColor(gRole.hexColor)
         .addFields(
             {name: "💳ID", value: gRole.id, inline: true},
@@ -38,8 +33,10 @@ module.exports = {
         .setThumbnail(gRole.iconURL())
        
         
-        message.channel.send(({embeds: [roleemebed]})
+        interaction.reply(({embeds: [roleemebed]})
         
         );
-     }
-    }
+
+	}
+}
+
