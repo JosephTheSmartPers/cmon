@@ -4,19 +4,16 @@ module.exports = {
     name: 'oneliner',
     aliases: [],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Sends random oneliner',
     usage: "oneliner",
     async execute(message, args, cmd, client, Discord){
         const post = await getPost('oneliners')
-            const embed = new Discord.MessageEmbed()
-            
-                            .setColor("RANDOM")
-                .setImage(post. url_overridden_by_dest)
-                .setTitle(post.title.toString())    
-                .setDescription(post.selftext)
-                
-                .setFooter(`👍${post.ups} 👎${post.downs}`)
-                message.channel.send({embeds: [embed]}); 
+        console.log(post)
+        const embed = new Discord.EmbedBuilder()
+            .setColor("Random")
+            .setImage(post.url_overridden_by_dest)
+            .setTitle(`${post.title.toString()}`)
+            .setFooter({text: `👍${post.ups} 👎${post.downs}`})
+        message.channel.send({embeds: [embed]});
             }
         }

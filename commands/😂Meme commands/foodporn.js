@@ -4,15 +4,25 @@ module.exports = {
     name: 'foodporn',
     aliases: ["food"],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Sends foodporn post from reddit',
     usage: "foodporn",
     async execute(message, args, cmd, client, Discord){
-        let res = await getPost('foodporn');
-        let description = res.selftext
-        let title = res.title
-        while(!res.url_overridden_by_dest || res.is_video == true || res.type == 'video'){
-            res = await getPost('foodporn');
+        let msg = await message.channel.send(`Searching the internet for food <a:loading:1026905223031173150>`)
+
+let reddit = "foodporn"
+
+let res = await getPost(reddit);
+let description = res.selftext
+let title = res.title
+        function isvid(res){
+            if(res.crosspost_parent_list){
+                if(res.crosspost_parent_list.is_video == true) return true
+            }
+            return false
+        }
+
+        while(!res.url_overridden_by_dest || res.is_video == true || isvid(res) || res.type == 'video' || res.url.includes("gallery")){
+            res = await getPost(reddit);
         }
                 if(title.length > 200){
                     title = "Too long"
@@ -20,14 +30,13 @@ module.exports = {
                 if(description.length > 200){
                     description = "Too long"
                 }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setImage(res.url_overridden_by_dest)
-                        .setTitle(res.title)
-                        .setURL(res.url)
-                        .setDescription(res.selftext)
-                        .setFooter(`👍${res.ups} 👎${res.downs} | 💬${res.num_comments}`)
-                        message.channel.send({embeds: [embed]}); 
+            const embed = new Discord.EmbedBuilder()
+                .setColor("Random")
+                .setImage(res.url_overridden_by_dest)
+                .setTitle(res.title)
+                .setURL(res.url)
+                .setFooter({text: `👍${res.ups} 👎${res.downs} | 💬${res.num_comments}`})
+        msg.edit({content: "", embeds: [embed]});
             }
         }
         
