@@ -1,32 +1,30 @@
 const Discord = require('discord.js');
-const { getPost, getImage } = require('random-reddit')
+const https = require('https');
+
 module.exports = {
     name: 'cat',
     aliases: [],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Sends a cute cat',
     usage: "cat",
     async execute(message, args, cmd, client, Discord){
-        let res = await getPost('catpictures');
-        let description = res.selftext
-        let title = res.title
-        while(!res.url_overridden_by_dest || res.is_video == true || res.type == 'video'){
-            res = await getPost('catpictures');
-        }
-                if(title.length > 200){
-                    title = "Too long"
-                }
-                if(description.length > 200){
-                    description = "Too long"
-                }
-                    const embed = new Discord.MessageEmbed()
-                        .setColor("RANDOM")
-                        .setImage(res.url_overridden_by_dest)
-                        .setTitle(res.title)
-                        .setURL(res.url)
-                        .setDescription(res.selftext)
-                        .setFooter(`👍${res.ups} 👎${res.downs} | 💬${res.num_comments}`)
-                        message.channel.send({embeds: [embed]});  
+        let msg = await message.channel.send(`Searching the internet for cats <a:loading:1026905223031173150>`)
+
+        let url = "https://api.thecatapi.com/v1/images/search?"
+        let data = ""
+
+        await https.get(url, (resp) => {
+            resp.on('data', (chunk) =>{
+                data += chunk
+            })
+            resp.on('end', async () => {
+                data = await JSON.parse(data)
+                const embed = new Discord.EmbedBuilder()
+                    .setColor("Random")
+                    .setImage(data[0].url)
+                    .setTitle("Meow🐈.")
+                msg.edit({content: "", embeds: [embed]});
+            })
+        })
             }
         }

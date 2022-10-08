@@ -1,6 +1,5 @@
 module.exports = {
     name: "profile",
-    permissions: ["SPEAK"],
     description: "Shows the pfp of the tagged person",
     usage: "pfp <@person>",
     aliases: ["pfp", "profilepic", "profilepicture", "avatar"],

@@ -22,7 +22,7 @@ try{
         if(format == 'help' || !format){
             
 
-                            const page1 = new Discord.MessageEmbed()
+                            const page1 = new Discord.EmbedBuilder()
                 .setColor('#ff9a00')
                 .setTitle('😆Meme commands.')
             
@@ -41,13 +41,13 @@ try{
                 {name: '-cmeme sh!t <@person>', value: '"Eww I stepped in some sh!t" meme.'},
                 {name: '**-cmeme slap <@person>**', value: 'Slap someone.'},
                 {name: '-cmeme spank <@person>', value: 'Spank someone.'},
-                {name: '-cmeme affect <imageURL>', value: 'The: No it doesnt affect my baby meme.'},
-                {name: '-cmeme beautiful <imageURL>', value: 'The: Gravity falls "its beautifulll meme. '},
-                {name: '-cmeme bed <imageURL> <imageURL again>', value: 'Mum theres a monster under my bed meme.'},
-                {name: '-cmeme delete <imageURL>', value: 'Are you sure you want to delete this (type: trash)'},
-                {name: '-cmeme hitler <imageURL>', value: 'Worse than hitler meme.'},
+                {name: '-cmeme affect <@person>', value: 'The: No it doesnt affect my baby meme.'},
+                {name: '-cmeme beautiful <@person>', value: 'The: Gravity falls "its beautifulll meme. '},
+                {name: '-cmeme bed <@person> <@person>', value: 'Mum theres a monster under my bed meme.'},
+                {name: '-cmeme delete <@person>', value: 'Are you sure you want to delete this (type: trash)'},
+                {name: '-cmeme hitler <@person>', value: 'Worse than hitler meme.'},
                 {name: '-cmeme kiss <@person>', value: 'Kiss someone'},
-                {name: '-cmeme jail <imageURL>', value: 'Hes in jail now.'}
+                {name: '-cmeme jail <@person>', value: 'Hes in jail now.'}
                 )
                
 
@@ -64,7 +64,7 @@ try{
 
         let image = await canvacord.Canvas.changemymind(text);
 
-        let changeMyMind = new Discord.MessageAttachment(image, "cmm.png")
+        let changeMyMind = new Discord.AttachmentBuilder(image, "cmm.png")
 
         message.channel.send({files: [changeMyMind]});
 }
@@ -76,7 +76,7 @@ try{
         
         const image = await canvacord.Canvas.opinion(avatar, msg);
 
-        const icong = new Discord.MessageAttachment(image, "opinion.png")
+        const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
         message.channel.send({files: [icong]});
 }
@@ -85,7 +85,7 @@ try{
 const image = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
 const sendimage = await canvacord.Canvas.facepalm(image);
 
-const icong = new Discord.MessageAttachment(sendimage, "facepalm.png")
+const icong = new Discord.AttachmentBuilder(sendimage, "facepalm.png")
 message.channel.send({files: [icong]})
 
 }
@@ -95,7 +95,7 @@ message.channel.send({files: [icong]})
                
         const image = await canvacord.Canvas.ohno(msg);
 
-        const icong = new Discord.MessageAttachment(image, "opinion.png")
+        const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
         message.channel.send({files: [icong]});
 
@@ -108,7 +108,7 @@ message.channel.send({files: [icong]})
                 
         const image = await canvacord.Canvas.rainbow(targetpfp);
 
-        const icong = new Discord.MessageAttachment(image, "opinion.png")
+        const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
         message.channel.send({files: [icong]});
 }
@@ -120,7 +120,7 @@ if(format == 'rip'){
             
     const image = await canvacord.Canvas.rip(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -132,7 +132,7 @@ if(format == 'trash'){
             
     const image = await canvacord.Canvas.trash(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -144,7 +144,7 @@ if(format == 'wanted'){
             
     const image = await canvacord.Canvas.wanted(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -156,7 +156,7 @@ if(format == 'wasted'){
             
     const image = await canvacord.Canvas.wasted(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -168,7 +168,7 @@ if(format == 'sepia'){
             
     const image = await canvacord.Canvas.sepia(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -182,7 +182,7 @@ if(format == 'sh!t'){
             
     const image = await canvacord.Canvas.shit(targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -196,7 +196,7 @@ if(format == 'slap'){
             
     const image = await canvacord.Canvas.slap(image23, targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -210,7 +210,7 @@ if(format == 'spank'){
             
     const image = await canvacord.Canvas.spank(image23, targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }
@@ -220,7 +220,7 @@ if(format === 'affect'){
             
     const atachement = await canvacord.Canvas.affect(image);
 
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -231,7 +231,7 @@ if(format === 'beautiful'){
             
     const atachement = await canvacord.Canvas.beautiful(image);
 
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -243,7 +243,7 @@ if(format === 'bed'){
     const image2 = (message.mentions.users.at(1).displayAvatarURL({ dynamic: false, format: 'png' })) || null
     if(image2 == null) return message.channel.send("You didn't tag anyone for the second argument!")
     const atachement = await canvacord.Canvas.bed(image, image2);
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -254,7 +254,7 @@ if(format === 'delete'){
             
     const atachement = await canvacord.Canvas.delete(image);
 
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -264,7 +264,7 @@ if(format === 'hitler'){
     if(image == null) return message.reply("You didn't tag anyone!")
     const atachement = await canvacord.Canvas.hitler(image);
 
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -275,7 +275,7 @@ if(format === 'jail'){
             
     const atachement = await canvacord.Canvas.jail(image);
 
-    const senda = new Discord.MessageAttachment(atachement, "opinion.png")
+    const senda = new Discord.AttachmentBuilder(atachement, "opinion.png")
 
     message.channel.send({files: [senda]});
              
@@ -290,7 +290,7 @@ if(format == 'kiss'){
             
     const image = await canvacord.Canvas.kiss(image23, targetpfp);
 
-    const icong = new Discord.MessageAttachment(image, "opinion.png")
+    const icong = new Discord.AttachmentBuilder(image, "opinion.png")
 
     message.channel.send({files: [icong]});
 }

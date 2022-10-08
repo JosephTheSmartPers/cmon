@@ -1,10 +1,26 @@
 const Discord = require('discord.js')
 const moment = require('moment');
+
+const allBadges = [
+    {name: "HypeSquadOnlineHouse1", badge: "<:Bravery:849670819645751367>"},
+    {name: "HypeSquadOnlineHouse2", badge: "<:Brilliance:849670844074033193>"},
+    {name: "HypeSquadOnlineHouse3", badge: "<:Balance:849670792408727612>"},
+    {name: "PremiumEarlySupporter", badge: "<:Suporter:849670947102916648>"},
+    {name: "VerifiedBotDeveloper", badge: "<:Botdev:849670993051385876>"},
+    {name: "Staff", badge: "<:Employee:849671009723351071>"},
+    {name: "Partner", badge: "<:Partner:849671115978047548>"},
+    {name: "Hypesquad", badge: "<:HypeSquad_Events:849671067898216508>"},
+    {name: "Nitro", badge: "<:Nitro:849671100689678348>"},
+    {name: "Boosting", badge: "<:Boosting:849670967755276298>"},
+    {name: "VerifiedBot", badge: "<:Bot:829386756871946280>"},
+    {name: "BugHunterLevel1", badge: "<:Bug1:849670879621283890>"},
+    {name: "BugHunterLevel2", badge: "<:Bug2:849670933731606559>"}
+]
+
 module.exports = {
     name: 'userinfo',
     aliases: [],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Shows info about a person!',
     usage: "userinfo <@person>",
      async execute(message, args, cmd, client, Discord, profileData){
@@ -41,52 +57,13 @@ var dbadges = [];
 if(message.guild.ownerID == member.id){
   dbadges.push("<:owner:852939417097601044>")
 }
-if(userFlags.includes("HOUSE_BRAVERY")){
-  dbadges.push("<:Bravery:849670819645751367>")
-}
-if(userFlags.includes("HOUSE_BRILLIANCE")){
-  dbadges.push("<:Brilliance:849670844074033193>")
-}
-if(userFlags.includes("HOUSE_BALANCE")){
-  dbadges.push("<:Balance:849670792408727612>")
-}
-if(userFlags.includes("EARLY_SUPPORTER")){
-  dbadges.push("<:Suporter:849670947102916648>")
-}
-if(userFlags.includes("EARLY_VERRIFIED_BOT_DEVELOPER")){
-  dbadges.push("<:Botdev:849670993051385876>")
-}
-if(userFlags.includes("EMPLOYEE")){
-  dbadges.push("<:Employee:849671009723351071>")
-}
-if(userFlags.includes("PARTNER")){
-  dbadges.push("<:Partner:849671115978047548>")
-}
-if(userFlags.includes("HYPESQUAD_EVENTS")){
-  dbadges.push("<:HypeSquad_Events:849671067898216508>")
-}
-if(userFlags.includes("NITRO")){
-  dbadges.push("<:Nitro:849671100689678348>")
-}
-if(userFlags.includes("BOOSTING")){
-  dbadges.push("<:Boosting:849670967755276298>")
-}
-if(userFlags.includes("VERIFIED_BOT")){
-  dbadges.push("<:Bot:829386756871946280>")
-}
-const badges = {
-  HOUSE_BRAVERY: "<:Bravery:849670819645751367>",
-  HOUSE_BRILLIANCE: "<:Brilliance:849670844074033193>",
-  HOUSE_BALANCE: "<:Balance:849670792408727612>",
-  EARLY_SUPPORTER: "<:Suporter:849670947102916648>",
-  EARLY_VERRIFIED_BOT_DEVELOPER: "<:Botdev:849670993051385876>",
-  EMPLOYEE: "<:Employee:849671009723351071>",
-  PARTNER: "<:Partner:849671115978047548>",
-  HYPESQUAD_EVENTS: "<:HypeSquad_Events:849671067898216508>",
-  NITRO: "<:Nitro:849671100689678348>",
-  BOOSTING: "<:Boosting:849670967755276298>"
 
-}
+allBadges.forEach(badg =>{
+    if(userFlags.includes(badg.name)){
+        dbadges.push(badg.badge)
+    }
+})
+
 if(dbadges.length === 0){
   dbadges.push("No badges")
 }
@@ -103,23 +80,25 @@ statuss = "🖥️Desktop"
 if(member.presence.clientStatus.mobile != undefined){
 statuss = "📱Phone"
 } 
-               let embed = new Discord.MessageEmbed()
+               let embed = new Discord.EmbedBuilder()
                     //.setAuthor(member.user.username)
                     .setThumbnail((target.displayAvatarURL({ dynamic: true})))
                     .setColor("#00ff00")
-                    .addField("Full Username", `${member.user.tag}`, inline)
-                    .addField("🆔ID", member.user.id, inline)
-                    .addField("👤Nickname", `${member.nickname !== null ? `Nickname: ${member.nickname}` : "❌ None"}`, true)
-                    .addField(`\:robot:Bot`, `${bot}`,inline, true)
-                    .addField("🛏️Status", `${status[member.presence.status]}`, inline, true)
-                    .addField(`❓Platform`, `${statuss}`, true)
-                    .addField("🎮Playing", `${member.presence.game ? `🎮 ${member.user.presence.game.name}` : "❌ Not playing"}`,inline, true)
-                    .addField(`🧾Roles(${member.roles.cache.size -1})`, `${member.roles.cache.filter(r => r.id !== message.guild.id).map(roles => `<@&${roles.id}>`).join(" **|** ") || "❌ No Roles"}`, true)
-                    .addField('💳Permissions', `${parms}`)
-                    .addField("🎖️Badges", dbadges.join(" "), true)
-                    .addField("🗓️Joined Discord At", member.user.createdAt.toString())
-                    .addField("🕰️Joined server at", moment(member.joinedTimestamp).toString())
-                    .setFooter(`ℹ️Information about ${member.user.username}`)
+                    .addFields(
+                        {name: "Full Username", value: `${member.user.tag}`, inline: true},
+                        {name: "ID", value: member.user.id, inline: true},
+                        {name: "👤Nickname", value: `${member.nickname !== null ? `Nickname: ${member.nickname}` : "❌ None"}`, inline: true},
+                        {name: `\:robot:Bot`, value: `${bot}`,inline, inline: true},
+                        {name: "🛏️Status", value: `${status[member.presence.status]}`, inline, inline: true},
+                        {name: `❓Platform`, value: `${statuss}`, inline: true},
+                        {name: "🎮Playing", value: `${member.presence.game ? `🎮 ${member.user.presence.game.name}` : "❌ Not playing"}`,inline, true: true},
+                        {name: `🧾Roles(${member.roles.cache.size -1})`, value: `${member.roles.cache.filter(r => r.id !== message.guild.id).map(roles => `<@&${roles.id}>`).join(" **|** ") || "❌ No Roles"}`, inline: true},
+                        {name: "🎖️Badges", value: dbadges.join(" "), inline: true},
+                        {name: '💳Permissions', value: `${parms}`},
+                        {name: "🗓️Joined Discord At", value: member.user.createdAt.toString()},
+                        {name: "🕰️Joined server at", value: moment(member.joinedTimestamp).toString()}
+                        )
+                    .setFooter({text: `ℹ️Information about ${member.user.username}`})
                     .setTimestamp()
                     
                 message.channel.send({embeds: [embed]});

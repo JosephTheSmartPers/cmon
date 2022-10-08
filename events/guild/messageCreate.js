@@ -230,6 +230,7 @@ if(command.hasOwnProperty('permissions'))
     if(command.permissions.length){
       let invalidPerms = []
       for(const perm of command.permissions){
+        console.log(command)
           if(!message.member.permissions.has(Discord.PermissionsBitField.Flags[perm])){
             invalidPerms.push(perm);
               }

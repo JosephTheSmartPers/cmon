@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
 const { getPost, getImage } = require('random-reddit')
 module.exports = {
-    name: 'cat',
+    name: 'uamemesforces',
     aliases: ['ua', 'uamemes'],
     cooldown: 0,
-    permissions: ["SPEAK"],
     description: 'Sends war crime suggestions.',
     usage: "ua",
     async execute(message, args, cmd, client, Discord){
