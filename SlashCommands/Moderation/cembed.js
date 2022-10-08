@@ -47,7 +47,7 @@ module.exports = {
         embed.setColor(color)
         embed.setTitle(title)
 
-        interaction.reply({content: "Sent embed<a:Check:831956237305643069>", ephemeral: true})
+        interaction.reply({content: "Sent embed<a:check:854289501148020747>", ephemeral: true})
 
         interaction.channel.send({embeds: [embed]})
 

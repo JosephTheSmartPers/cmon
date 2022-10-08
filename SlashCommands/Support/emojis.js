@@ -9,7 +9,7 @@ module.exports = {
     run: async (client, interaction, args) => {
         let sicon = interaction.guild.iconURL({ dynamic: true});
         const emojis = interaction.guild.emojis.cache.map((e) => {
-            return `**|** ${e} **-** \`:${e.name}:\``;
+            return `**|** ${e} **-** \`\\${e}\``;
            });
 
         let serverembed = new EmbedBuilder()

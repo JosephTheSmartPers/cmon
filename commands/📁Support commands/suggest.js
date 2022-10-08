@@ -16,14 +16,16 @@ module.exports = {
          if(ss.suggestionschannel === null || ss.suggestionschannel == "" || !ss.suggestionschannel) return
 
         let messageArgs = args.join(' ');
-        const embed = new discord.MessageEmbed()
+        const embed = new discord.EmbedBuilder()
         .setColor('#eac322')
-        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-        .setDescription(messageArgs);
+        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+        .setDescription(messageArgs)
+        .setFooter({text: `${message.author.id}`, iconURL: client.user.displayAvatarURL({dynamic: true})})
+        .setTimestamp()
 
         channel.send({embeds: [embed]}).then((msg) =>{
-            msg.react('👍');
-            msg.react('👎');
+            msg.react('<a:notCheck:854289501094281236>');
+            msg.react('<a:check:854289501148020747>');
             message.delete();
         }).catch((err)=>{
             throw err;

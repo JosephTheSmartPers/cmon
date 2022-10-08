@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'weather',
-    cooldown: 60,
+    cooldown: 10,
     aliases: ['wthr'],
     description: "Tells you the wether.",
     usage: "weather <place>",
@@ -20,14 +20,16 @@ module.exports = {
         var current = result[0].current;
         var location = result[0].location;
 
-        const weatherinfo = new Discord.MessageEmbed()
-        .setDescription(`**${current.skytext}**`)
-        .setAuthor(`WEATHER FORECAST INCOMING FOR: ${current.observationpoint}`)
-        .setThumbnail(current.imageUrl)
-        .setColor('#0787c5')
-             .addField('Degree Type', 'Celsius', true)
-        .addField('Temperature', `${current.temperature}°`, true)
-        .addField('Feels like', `${current.feelslike}°`, true)
+       const weatherinfo = new Discord.EmbedBuilder()
+                   .setDescription(`**${current.skytext}**`)
+                   .setAuthor({name: `WEATHER FORECAST INCOMING FOR: ${current.observationpoint}`})
+                   .setThumbnail(current.imageUrl)
+                   .setColor('#0787c5')
+                   .addFields(
+                       {name: 'Degree Type', value: 'Celsius', inline: true},
+                       {name: 'Temperature',  value: `${current.temperature}°`, inline: true},
+                       {name: 'Feels like',  value: `${current.feelslike}°`, inline: true}
+                   )
       
 
         message.channel.send({embeds: [weatherinfo]})

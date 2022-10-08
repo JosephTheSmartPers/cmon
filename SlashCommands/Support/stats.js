@@ -1,17 +1,19 @@
-const Discord = require("discord.js")
+const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js")
 const os = require('os')
 const cpuStat = require("cpu-stat");
 const moment = require("moment") 
+
 module.exports = {
-  name: 'stats',
-  aliases: [],
-  cooldown: 0,
-  description: "Stats of the bot, like cpu usage",
-  usage: "usage",
-  async execute(message,args, cmd, client, Discord) {
-    
-   
-               let { version } = require("discord.js");
+    cooldown: 10,
+    ...new SlashCommandBuilder()
+    .setName("stats")
+    .setDescription("Stats of the bot, like cpu usage."),
+
+    run: async (client, interaction, args) => {
+
+        interaction.reply(`Loading stats for BarniBot <a:loading:1026905223031173150>`)
+
+        let { version } = require("discord.js");
         
                cpuStat.usagePercent(function(err, percent, seconds) {
                  if (err) {
@@ -24,7 +26,7 @@ module.exports = {
                 let mins = Math.floor((client.uptime / 60) % 60);
      
                  //let duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-                 let embedStats = new Discord.EmbedBuilder()
+                let embedStats = new EmbedBuilder()
                     .setTitle("*** Stats ***")
                     .setColor("#00ff00")
                     .addFields(
@@ -42,10 +44,9 @@ module.exports = {
                     )
                     .setFooter({text: "BarniBot stats"})
         
-                message.channel.send({embeds: [embedStats]})
+                interaction.editReply({content: "", embeds: [embedStats]})
                 })
-   
-   
-    
-  }
+
+	}
 }
+
