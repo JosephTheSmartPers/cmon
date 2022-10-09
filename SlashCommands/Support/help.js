@@ -21,7 +21,8 @@ module.exports = {
             'support': "Need help?",
             'meme': "Get images from reddit, create, or browse memes.",
             'setup': "Customize how the bot works on the server (recommended).",
-            'test': "Commands you can't you but will be availabe in the future."
+            'test': "Commands you can't you but will be availabe in the future.",
+            "space": "See a bunch of API stuff about space."
           }
 
           const names = {
@@ -34,6 +35,7 @@ module.exports = {
             'meme': "😂Meme commands",
             'setup': "🛠️Setup commands",
             'test': "⚠️Under developement",
+            "space": "🪐Space commands"
           }
 
           const colors = {
@@ -46,6 +48,7 @@ module.exports = {
             'meme': "Yellow",
             'setup': "Black",
             'test': "#ffb31c",
+            "space": "#300847"
           }
 
         let directories = [
