@@ -21,6 +21,8 @@ module.exports = {
         const ticket = guildm.ticketcategory;
         const welcomec = guildm.welcomechannel;
         const wrole = guildm.welcomerole;
+        const vchanel = guildm.voicechannel;
+
         let inline = true
         var a = []
         var b = []
@@ -31,7 +33,12 @@ module.exports = {
         var g = []
         var h = []
         var i = []
-       
+        var vF = []
+
+        if(vchanel){
+            vF.push(`\`${vchanel}\``)
+        }
+
         if(nyec){
             a.push(`\`${nyec}\``)
         }
@@ -68,6 +75,10 @@ module.exports = {
             i.push(`\`${wrole}\``)
         }
         //
+
+        if(!vchanel){
+            vF.push('\`❌None\`')
+    }
         if(!nyec){
             
             a.push('\`❌None\`')
@@ -115,7 +126,8 @@ module.exports = {
             {name: '👍👎Suggestions channel', value: f.join(" "), inline},
             {name: '🎫Ticket category', value: g.join(" "), inline},
             {name: '👋Welcome channel', value: h.join(" "), inline},
-            {name: '🏅Welcome role', value: i.join(" "), inline}
+            {name: '🏅Welcome role', value: i.join(" "), inline},
+            {name: '🔊Personal voice', value: i.join(" "), inline}
         )
         .setColor('Yellow')
         interaction.reply({embeds: [embed]})

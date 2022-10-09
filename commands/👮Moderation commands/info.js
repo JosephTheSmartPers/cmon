@@ -21,6 +21,7 @@ module.exports = {
         const ticket = guildm.ticketcategory;
         const welcomec = guildm.welcomechannel;
         const wrole = guildm.welcomerole;
+        const vchanel = guildm.voicechannel;
         let inline = true
         var a = []
         var b = []
@@ -31,9 +32,13 @@ module.exports = {
         var g = []
         var h = []
         var i = []
-       
+        var vF = []
+
         if(nyec){
             a.push(`\`${nyec}\``)
+        }
+        if(vchanel){
+            vF.push(`\`${vchanel}\``)
         }
         if(logs){
           
@@ -80,6 +85,9 @@ if(!mute){
    
     c.push('\`❌None\`')
 }
+        if(!vchanel){
+                vF.push('\`❌None\`')
+        }
 if(!prefix){
 
     d.push('\`-\`')
@@ -115,7 +123,8 @@ const embed = new Discord.EmbedBuilder()
     {name: '👍👎Suggestions channel', value: f.join(" "), inline},
     {name: '🎫Ticket category', value: g.join(" "), inline},
     {name: '👋Welcome channel', value: h.join(" "), inline},
-    {name: '🏅Welcome role', value: i.join(" "), inline}
+    {name: '🏅Welcome role', value: i.join(" "), inline},
+    {name: '🔊Personal voice', value: i.join(" "), inline}
 )
 .setColor('Yellow')
 message.channel.send({embeds: [embed]})

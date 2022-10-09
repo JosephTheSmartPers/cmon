@@ -14,7 +14,7 @@ module.exports = {
         if(!channel) channel = message.guild.channels.cache.find(channel => channel.id === args[0])
         if(!channel) return message.channel.send(`:x:There is no such channel in this server called **${args[0]}**❗`)
   
-        if(!channel.isVoice()) message.reply("This isn't a voicechannel.")
+        if(channel.type != Discord.ChannelType.GuildVoice) return message.reply("This isn't a voicechannel.")
         await guildModel.findOneAndUpdate({
             guildId: message.guildId,
         },{

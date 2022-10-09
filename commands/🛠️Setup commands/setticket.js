@@ -13,7 +13,7 @@ module.exports = {
 
         const channel = message.guild.channels.cache.find(category => category.id === args[0])
         if(!channel) return message.channel.send(`There is no such category in this server called **${args[0]}**❗`)
-        if (channel.type === "channel") return message.reply('That is a channels id not a categorys❗')
+        if (channel.type != Discord.ChannelType.GuildCategory) return message.reply('That is a channels id not a categorys❗')
       
          await guildModel.findOneAndUpdate({
             guildId: message.guildId,
