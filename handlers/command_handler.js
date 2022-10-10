@@ -8,13 +8,12 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 
 module.exports = async (client, Discord) =>{
-  const slashCommands = await globPromise(`${process.cwd().replace(`\\`, `/`)}/SlashCommands/*/*.js`);
+  const slashCommands = await globPromise(`${process.cwd().split("\\").join("/")}/SlashCommands/*/*.js`);
   const arrayOfSlashCommands = [];
-
     
     slashCommands.map((value) => {
      const file = require(value);
-     let dir = value.split("/")[3]
+     let dir = value.split("/")[value.split("/").length - 2]
      if(!file?.name) return;
      file.directory = dir
      if(file.sub == true){

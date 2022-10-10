@@ -73,6 +73,7 @@ module.exports = {
                     commands: getCommands,
                 };
         })
+        
         const embed = new EmbedBuilder()
         .setColor('#15ff00')
             .setTitle(`Select the category in the dropdown menu!`)
@@ -87,7 +88,7 @@ module.exports = {
                     .addOptions(
                         categories.map((cmd) => {
                             return {
-                                label:names[cmd.directory.toLocaleLowerCase()],
+                                label: names[cmd.directory.toLocaleLowerCase()],
                                 value: cmd.directory.toLowerCase(),
                                 description: descriptions[cmd.directory.toLocaleLowerCase()]
                         }
