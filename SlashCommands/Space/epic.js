@@ -48,6 +48,9 @@ module.exports = {
 
         await fetch(url)
         .then(response => {
+            if(!response.ok){
+                return interaction.editReply("something went wrong :(")
+            }
             return response.json()
         })
         .then(data => {

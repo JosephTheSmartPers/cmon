@@ -34,20 +34,25 @@ module.exports = {
 
         await interaction.reply(`Searching the for the APOD <a:loading:1026905223031173150>`)
 
+        let ok = true
+
         await fetch(url)
         .then(response => {
             // indicates whether the response is successful (status code 200-299) or not
             if (!response.ok) {
+                ok = false
                 return interaction.editReply("Somehting went wrong ):")
+                
             }
             return response.json()
         })
         .then(data => {
+            if(ok == false) return
             let embed = new EmbedBuilder()
                 .setTitle(data.title)
                 .setDescription(data.explanation)
                 .setFooter({text: data.date})
-                .setImage(data.thumbs || data.hdurl)
+                .setImage(data.hdurl || `https://img.youtube.com/vi/${data.url.split("/")[4].split("?")[0]}/0.jpg`)
                 .setColor("Purple")
             interaction.editReply({content: "", embeds: [embed]})
         })
