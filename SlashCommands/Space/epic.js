@@ -14,11 +14,11 @@ module.exports = {
 
     run: async (client, interaction, args) => {
 
+        await interaction.reply(`Searching the for the APOD <a:loading:1026905223031173150>`)
+
         let year = args.getInteger("year") || "n"
         let month = args.getInteger("month") ||  "n"
         let day = args.getInteger("day") ||  "n"
-
-        console.log(month.toString().length)
 
         if(month && month.toString().length == 1) month = "0" + month.toString()
         if(day && day.toString().length == 1) day = "0" + day.toString()
@@ -29,17 +29,13 @@ module.exports = {
         yourDate = yourDate.split("-")
         yourDate[1] =  "0" + (yourDate[1] - 4).toString()
         yourDate = yourDate.join("-")
-        console.log(yourDate)
 
-
-
-        if(year == "2022" && parseInt(month) > 9) return interaction.reply(`Ayo I cant see into da future`)
+        if(year == "2022" && parseInt(month) > 9) return interaction.editReply(`Ayo I cant see into da future`)
         
         let url = `https://api.nasa.gov/EPIC/api/${args.getString("type")}/date/${year}-${month}-${day}?api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1`
                                                             
         if(year == "n" || month == "n" || day == "n") url = `https://api.nasa.gov/EPIC/api/${args.getString("type")}/date/${yourDate}?api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1`
 
-        console.log(url)
         year = yourDate.split("-")[0]
         month = yourDate.split("-")[1]
         day = yourDate.split("-")[2]
@@ -55,23 +51,27 @@ module.exports = {
         })
         .then(data => {
             satData = data[Math.floor(Math.random() * data.length)]
-            
+            let imageURL = `https://api.nasa.gov/EPIC/archive/${args.getString("type")}/${satData.date.split(" ")[0].split("-").join("/")}/png/${satData.image}.png?api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1`
+            let embed = new EmbedBuilder()
+                .setTitle(`${satData.caption}`)
+                .addFields(
+                    {name: "Date:", value: `${year}-${month}-${day}`, inline: true},
+                    {name: "Latitude:", value: `${satData.centroid_coordinates.lat}`, inline: true},
+                    {name: "Latitude:", value: `${satData.centroid_coordinates.lon}`, inline: true}
+                )
+    
+                .setColor("Purple")
+                .setImage(imageURL)
+                .setFooter({text: satData.date})
+                interaction.editReply({content: "", embeds: [embed]})    
         })
-        .catch(error => console.log(error))
-        console.log(satData)
-        let imageURL = `https://api.nasa.gov/EPIC/archive/${args.getString("type")}/${year}/${month}/${day}/png/${satData.image}.png?api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1`
-        let embed = new EmbedBuilder()
-            .setTitle(`${satData.caption}`)
-            .addFields(
-                {name: "Date:", value: `${year}-${month}-${day}`, inline: true},
-                {name: "Latitude:", value: `${satData.centroid_coordinates.lat}`, inline: true},
-                {name: "Latitude:", value: `${satData.centroid_coordinates.lon}`, inline: true}
-            )
-
-            .setColor("Purple")
-            .setImage(imageURL)
-            .setFooter({text: satData.date})
-            interaction.reply({embeds: [embed]})
+        .catch(error => {
+            
+            console.log(error)
+            return interaction.editReply("something went wrong :(")
+        })
+        
+        
 
 	}
 }
