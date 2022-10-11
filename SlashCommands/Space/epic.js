@@ -20,8 +20,8 @@ module.exports = {
 
         console.log(month.toString().length)
 
-        if(month.toString().length == 1) month = "0" + month.toString()
-        if(day.toString().length == 1) day = "0" + day.toString()
+        if(month && month.toString().length == 1) month = "0" + month.toString()
+        if(day && day.toString().length == 1) day = "0" + day.toString()
 
         let yourDate = new Date()
         
