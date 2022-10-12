@@ -39,7 +39,7 @@ client.on('ready', async (client) => {
 		console.log(`Started refreshing ${arrayOfSlashCommands.length} application (/) commands.`);
 
 		const data = await rest.put(
-			Routes.applicationGuildCommands(clientId, guildId),
+			Routes.applicationCommands(clientId),
 			{ body: arrayOfSlashCommands },
 		);
 
