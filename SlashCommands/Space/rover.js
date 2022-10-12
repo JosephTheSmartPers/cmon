@@ -73,7 +73,7 @@ module.exports = {
         let month = args.getInteger("month") ||  "n"
         let day = args.getInteger("day") ||  "n"
 
-        let amount = args.getString("amount") || false  
+        let amount = args.getBoolean("amount") || false  
 
         let format = args.getSubcommand()
 
