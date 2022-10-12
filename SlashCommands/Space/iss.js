@@ -1,5 +1,6 @@
 const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, PermissionFlagsBits } = require("discord.js")
 const https = require('https');
+const yt = require('yt-search');
 
 module.exports = {
     ...new SlashCommandBuilder()
@@ -8,12 +9,23 @@ module.exports = {
 
     run: async (client, interaction, args) => {
 
+        await interaction.reply(`Searching the for the ISS <a:loading:1026905223031173150>`)
+
         let url = "http://api.open-notify.org/iss-now.json"
 
         let yourDate = new Date()
         yourDate = yourDate.toISOString().split('T')[0]
 
         let satData = ""
+
+        let newSDate = await new Date()
+
+        let nowDate = await new Date()
+        nowDate = nowDate.toJSON().split(":")[0].split("-").join("").split("T").join() + newSDate.toLocaleTimeString("en-US", {timeZone: 'America/Los_Angeles'}).toString().split(":")[0].split(",")[0];
+
+        nowDate = nowDate.toString().split(",")[0]
+
+        let urlplis = `https://ustvstaticcdn1-a.akamaihd.net/i/channel/live/1_17074538,640x360,b:${nowDate}.jpg` 
 
         await fetch(url)
         .then(response => {
@@ -29,34 +41,19 @@ module.exports = {
         })
         .catch(error => console.log(error))
 
-        let imageURL = `https://api.nasa.gov/planetary/earth/assets?lon=${satData.iss_position.longitude}&lat=${satData.iss_position.latitude}&date=2021-02-01&dim=0.15&api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1`
         let mapURL = `https://google.com/maps/search/${satData.iss_position.latitude}+${satData.iss_position.longitude}/@${satData.iss_position.latitude},${satData.iss_position.longitude}z`
-        await fetch(imageURL)
-        .then(esponse => {
-            // indicates whether the response is successful (status code 200-299) or not
-            if (!esponse.ok) {
-            }
-            return esponse.json()
-            
-        })
-        .then(async data => {
-            console.log(data)
-            let image = await data.url
 
             let embed = new EmbedBuilder()
             .setTitle("Where may the ISS be🚀")
             .setDescription(mapURL)
             .setURL(mapURL)
-            .setImage(image)
+            .setImage(urlplis)
             .addFields(
                 {name: "Latitude", value: satData.iss_position.latitude},
                 {name: "Longitude", value: satData.iss_position.longitude},
             )
             .setColor("Purple")
-            interaction.reply({embeds: [embed]})
-            
-        })
-        .catch(error => console.log(error))
+            interaction.editReply({embeds: [embed]})
 
         
 

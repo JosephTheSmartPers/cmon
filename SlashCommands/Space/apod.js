@@ -18,14 +18,15 @@ module.exports = {
         let month = args.getInteger("month")
         let day = args.getInteger("day")
 
-        if(month.toString().length == 1) month = "0" + month.toString()
-        if(day.toString().length == 1) day = "0" + day.toString()
+        if(month && month.toString().length == 1) month = "0" + month.toString()
+        if(day && day.toString().length == 1) day = "0" + day.toString()
 
         let date = await new Date(year, month, day)
 
         let splitDate = yourDate.split("-")
 
         if(year >= splitDate[0] && month >= splitDate[1] && day > splitDate[2]) return interaction.reply(`Ayo ${year}-${month}-${day} hasnt exactly happened yet ):`)
+
                      
         let url = "https://api.nasa.gov/planetary/apod?api_key=5tSZHL8HvM27ftFM7cCTunI1eh9RrxV6lpf6hfF1"
         if(year && month && day){
