@@ -27,7 +27,7 @@ module.exports = {
 		    // The label is the prompt the user sees for this input
 			.setLabel(question)
 		    // Short means only a single line of text
-			.setStyle(TextInputStyle.Short);
+			.setStyle(TextInputStyle.Paragraph);
         const firstActionRow = new ActionRowBuilder().addComponents(Wquestion);
 
         modal.addComponents(firstActionRow);
@@ -51,7 +51,7 @@ module.exports = {
                 .setTitle(`Youg got ${sal} moniy for answering correctly!`)
             inter.reply({embeds: [fitEmbed]});
             }else{
-                inter.editReply("That wasn't the answer, better luck next time!")
+                inter.reply("That wasn't the answer, better luck next time!")
                 }
         })}
         
