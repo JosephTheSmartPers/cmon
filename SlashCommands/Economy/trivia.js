@@ -3,7 +3,7 @@ const { Client, Message, EmbedBuilder, SlashCommandBuilder, CommandInteraction, 
 const profileModel = require("../../models/profileSchema");
 
 module.exports = {
-    cooldown: 120,
+    cooldown: 60,
     ...new SlashCommandBuilder()
     .setName("trivia")
     .setDescription("Answer correctly and receive money!"),
@@ -15,31 +15,6 @@ module.exports = {
         
         let sal = 20000
 
-        async function working(question, answer){
-            const filter = m => m.author.id === interaction.user.id;
-            const rusure = await interaction.reply(question)
-            const collector = await interaction.channel.createMessageCollector({
-                max: 1,
-                filter,
-                time: 1000 * 20
-            })
-    
-            collector.on('collect', async m =>{
-                if(m.content.toLowerCase() == answer) {
-                        await profileModel.findOneAndUpdate({userID: interaction.user.id,}, 
-                            {$inc: {moniy: sal,},
-                        }); 
-                    const fitEmbed = new Discord.EmbedBuilder()
-                        .setColor('#fff85f')
-                        .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
-                        .setTitle(`After a nice day of work u got ${sal} moniy!`)
-                    m.channel.send({embeds: [fitEmbed]});
-                }else{
-                    m.reply("That wasn't the answer, better luck next time!")
-                    }})
-            collector.on('end', message =>{return})
-    }
-        
         let question = ""
         
         await fetch("https://jservice.io/api/random?count=1")
@@ -52,8 +27,45 @@ module.exports = {
         .then(async data => {
             question = await data
         }).catch(err=>{return interaction.reply("Something messed up ):")})
+
+        async function work(question, answer, obj){
+            const filter = m => m.author.id === interaction.user.id;
+
+            let wierdBed = new EmbedBuilder()
+                .setTitle(`Answer the question from the category *${obj.category.title}*`)
+                .setColor("Purple")
+                .setDescription(`\`${question}\``)
+                .setFooter({text: "You have 20 seconds"})
+
+            const rusure = await interaction.reply({embeds: [wierdBed]})
+            const collector = await interaction.channel.createMessageCollector({
+                max: 1,
+                filter,
+                time: 1000 * 20
+            })
+    
+            collector.on('collect', async m =>{
+
+                let winmoney = obj.value * 10
+
+                if(m.content.toLowerCase() == answer.toLowerCase()) {
+                        await profileModel.findOneAndUpdate({userID: interaction.user.id,}, 
+                            {$inc: {moniy: winmoney,},
+                        }); 
+                    const fitEmbed = new Discord.EmbedBuilder()
+                        .setColor('#fff85f')
+                        .setAuthor({name: interaction.user.tag, iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
+                        .setTitle(`You got it right! You will receive ${winmoney} moniy!`)
+                    m.channel.send({embeds: [fitEmbed]});
+                }else{
+                    m.reply(`The answer was \`${answer}\` better luck next time!`)
+                    }})
+            collector.on('end', message =>{return})
+    }
         
-        work(question[0].question, question[0].answer)
+        console.log(question[0])
+
+        work(question[0].question, question[0].answer, question[0])
 
         
 	}
