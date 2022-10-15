@@ -4,6 +4,8 @@ const { promisify } = require("util");
 const globPromise = promisify(glob)
 require('dotenv').config();
 
+const deleteer = require("../handlers/deleteHandler")
+
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 
@@ -42,6 +44,8 @@ client.on('ready', async (client) => {
 			Routes.applicationCommands(clientId),
 			{ body: arrayOfSlashCommands },
 		);
+
+      deleteer()
 
 		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     console.log(`Pushed all slash commands to guild ${guildId}`);
