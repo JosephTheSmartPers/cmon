@@ -14,7 +14,7 @@ module.exports = {
 
     run: async (client, interaction, args) => {
 
-        await interaction.reply(`Searching the for the APOD <a:loading:1026905223031173150>`)
+        await interaction.reply(`Searching the for a picture <a:loading:1026905223031173150>`)
 
         let year = args.getInteger("year") || "n"
         let month = args.getInteger("month") ||  "n"
