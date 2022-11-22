@@ -5,14 +5,15 @@ const voiceCollection = new Collection()
 module.exports = async (Discord, client, oldState, newState) => {
     const guildschema = await GuildModel.findOne({guildId: newState.guild.id})
     if(!guildschema || !guildschema.voicechannel) return
-    const channell = await newState.guild.channels.cache.find(channel => channel.id == guildschema.voicechannel)
+    console.log("there is")
+    const channell = await newState.guild.channels.cache.find(channel => channel.name == guildschema.voicechannel)
     
     const member = newState.member
     const user = member.user
     const guild = newState.guild
 
     
-    if(newState.channelId == guildschema.voicechannel){
+    if(newState.channelId == channell.id){
     let channel
     let maybe = guild.channels.cache.find((channel) => channel.name === user.tag && channel.parent === newState.channel.parent && channel.type === ChannelType.GuildVoice)
     if(maybe){

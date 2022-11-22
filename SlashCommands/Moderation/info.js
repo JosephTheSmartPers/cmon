@@ -72,7 +72,7 @@ module.exports = {
         }
         if(wrole){
         
-            i.push(`\`${wrole}\``)
+            i.push(`\`${vchanel}\``)
         }
         //
 
@@ -111,7 +111,7 @@ module.exports = {
 
         h.push('\`❌None\`')
         }
-        if(!wrole){
+        if(!vchanel){
             
             i.push('\`❌None\`')
         }
