@@ -57,23 +57,26 @@ elons.forEach(async element => {
         try{
         await message.delete()
         }catch(err){}
-        sent = message.content.toLowerCase()
-        elons.forEach(elon=>{
-            sent = sent.replace(elon, "`#!x$`")
-        })
+        const regex_1 = /(e+\W*l+\W*o+\W*n+)/gm;
+        const regex_2 = /(m+\W*u+\W*s+\W*k+)/gm;        
+        
+        const str = message.content
+        const subst = `||$1||`;
+        
+        var result = str.replace(regex_1, subst);
+        result = result.replace(regex_2, subst);
+
         replEmbed = new EmbedBuilder()
-        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL})
-        .setDescription(`${sent}`)
+        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true})})
+        .setDescription(`${result}`)
         message.channel.send({embeds: [replEmbed]})
         return
     }
+    return
     }
 );
 
-    dorkas.forEach(element =>{
 
-})
-    
     if(message.content.includes('bagel')){
         const bagel = new Discord.EmbedBuilder()
         .setTitle('Bagel has arrived')
