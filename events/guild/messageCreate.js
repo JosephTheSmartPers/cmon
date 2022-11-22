@@ -21,6 +21,8 @@ const GuildModel = require('../../models/guildSchema')
 
 const updater = require("../../handlers/updater")
 
+const {EmbedBuilder} = require("discord.js")
+
 module.exports = async (Discord, client, message,) => {
     let profileData;
     let lc
@@ -38,7 +40,7 @@ module.exports = async (Discord, client, message,) => {
     if(prefix === null) prefix = '-';
 if(!message.guild) prefix = '-'
     
-let dorkas = ['lilla']
+let elons = ['elon', "musk"]
 
 let his = ['hi', 'hello', 'howdy', 'gday', 'hola', 'what up', 'how are you', 'how are you?', 'hi there', 'greetings', 'morning', 'afternoon', 'evening', 'hey', 'good to see you', 'great to see you', 'nice to see you', 'good afternoon, sir, how are you today?', 'good afternoon sir, how are you today?']
 
@@ -49,13 +51,20 @@ his.forEach(element => {
 );
 
 
-dorkas.forEach(async element => {
+elons.forEach(async element => {
     if(message.content.toLowerCase().split(" ").join("").includes(element.toLowerCase()))
     {
         try{
         await message.delete()
         }catch(err){}
-
+        sent = message.content.toLowerCase()
+        elons.forEach(elon=>{
+            sent = sent.replace(elon, "`#!x$`")
+        })
+        replEmbed = new EmbedBuilder()
+        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL})
+        .setDescription(`${sent}`)
+        message.channel.send({embeds: [replEmbed]})
         return
     }
     }
