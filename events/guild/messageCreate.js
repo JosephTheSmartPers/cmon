@@ -51,12 +51,6 @@ his.forEach(element => {
 );
 
 
-elons.forEach(async element => {
-    if(message.content.toLowerCase().split(" ").join("").includes(element.toLowerCase()))
-    {
-        try{
-        await message.delete()
-        }catch(err){}
         const regex_1 = /(e+\W*l+\W*o+\W*n+)/gm;
         const regex_2 = /(m+\W*u+\W*s+\W*k+)/gm;        
         
@@ -66,16 +60,18 @@ elons.forEach(async element => {
         var result = str.replace(regex_1, subst);
         result = result.replace(regex_2, subst);
 
-        replEmbed = new EmbedBuilder()
-        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true})})
-        .setDescription(`${result}`)
-        message.channel.send({embeds: [replEmbed]})
-        return
-    }
-    return
-    }
-);
-
+        if(result != message.content){
+            try{
+                message.delete()
+            }
+            catch(err){
+                return
+            }
+            replEmbed = new EmbedBuilder()
+                .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true})})
+                .setDescription(`${result}`)
+            message.channel.send({embeds: [replEmbed]})
+        }
 
     if(message.content.includes('bagel')){
         const bagel = new Discord.EmbedBuilder()
