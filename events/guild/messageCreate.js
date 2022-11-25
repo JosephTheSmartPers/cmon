@@ -40,8 +40,7 @@ module.exports = async (Discord, client, message,) => {
     if(prefix === null) prefix = '-';
 if(!message.guild) prefix = '-'
     
-let elons = ['elon', "musk"]
-
+  
 let his = ['hi', 'hello', 'howdy', 'gday', 'hola', 'what up', 'how are you', 'how are you?', 'hi there', 'greetings', 'morning', 'afternoon', 'evening', 'hey', 'good to see you', 'great to see you', 'nice to see you', 'good afternoon, sir, how are you today?', 'good afternoon sir, how are you today?']
 
 his.forEach(element => {
@@ -49,10 +48,8 @@ his.forEach(element => {
        return message.channel.send(his[Math.floor(Math.random() * his.length)])
     }
 );
-
-
-        const regex_1 = /(e+\W*l+\W*o+\W*n+)/gm;
-        const regex_2 = /(m+\W*u+\W*s+\W*k+)/gm;        
+        const regex_1 = /([ⓔ⒠ℯ∊€ḕḗḙéḛḝẹẻẽếềểễệἐἑἒἓἔἕὲέeℰℇ∃ḔḖḘḚḜẸẺẼẾỀỂỄỆῈΈἘἙἚἛἜE]+\W*[ⓘ⒧ℓḻḽlℒ₤ḶḸḺḼL]+\W*[ⓞ⒪☹☺☻✪☮✺☼♨☢☀⍥ṍṏṑṓọỏốồổỗớờởỡợὀὁὂὃὄὅộoṌṎṐṒỌỎỐỒỔỖỘỚỜỞỠỢὈὉὊὋὌO]+\W*[ⓝ⒩ηℵസ൩നṅṇṉṋἠἡἢἣἤἥἦἧὴήᾐᾑᾒᾓᾔᾕᾖᾗῂῃῄῆῇnℕ₦ṄṆṈṊN]+)/gm;
+        const regex_2 = /([ⓜ⒨Պṃḿṁm♏ḾṀṂMlസ൬നണ൩]+\W*[ⓤ⒰υṳṵṷṹṻụủứừửữựὐὑὒὓὔὕὖὗὺύῠῡῢΰῦῧuṲỤỦỨỪỬỮỰṶṸṺṴU]+\W*[ⓢ⒮ടഗṡṣṥṧṩş﹩sŠṠṢṤṦṨS]+\W*[ⓚ⒦кḱḳḵk₭ḰḲḴK]+)/gm;        
         
         const str = message.content
         const subst = `||$1||`;

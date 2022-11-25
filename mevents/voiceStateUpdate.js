@@ -5,7 +5,6 @@ const voiceCollection = new Collection()
 module.exports = async (Discord, client, oldState, newState) => {
     const guildschema = await GuildModel.findOne({guildId: newState.guild.id})
     if(!guildschema || !guildschema.voicechannel) return
-    console.log("there is")
     const channell = await newState.guild.channels.cache.find(channel => channel.name == guildschema.voicechannel)
     
     const member = newState.member
