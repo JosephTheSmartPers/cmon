@@ -6,7 +6,8 @@ module.exports = async (Discord, client, oldState, newState) => {
     const guildschema = await GuildModel.findOne({guildId: newState.guild.id})
     if(!guildschema || !guildschema.voicechannel) return
     const channell = await newState.guild.channels.cache.find(channel => channel.name == guildschema.voicechannel)
-    
+    if(!channell) return
+
     const member = newState.member
     const user = member.user
     const guild = newState.guild

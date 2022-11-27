@@ -43,7 +43,6 @@ module.exports = {
                 const video_finder = async (query) =>{
                     const video_result = await ytSearch(query);
                     return (video_result.videos.length > 1) ? video_result.videos[0] : null;
-                    console.log;
                 }
 
                 const video = await video_finder(args.join(' '));
@@ -182,7 +181,7 @@ const play = (message) => {
     .setColor('#54f230')
     .setAuthor(message.author.tag, messag.author.displayAvatarURL({ dynamic: true}))
     .setTitle('Stoped')
-    .setDescription('Song played by ${message.author.username}')
+    .setDescription(`Song played by ${message.author.username}`)
     message.channel.send(playEmbed)
 }
 

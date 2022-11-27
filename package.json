@@ -28,6 +28,7 @@
     "discord-together": "^1.3.3",
     "discord.js": "^14.3.0",
     "discord.js-pagination": "^1.0.3",
+    "distube": "^4.0.4",
     "dotenv": "^16.0.0",
     "exaroton": "^1.8.0",
     "figlet": "^1.5.2",
