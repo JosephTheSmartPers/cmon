@@ -1,3 +1,4 @@
+const { createChannel } = require('discord.js')
 const {DisTube} = require('distube')
 const songs = require('../models/song')
 
@@ -9,17 +10,7 @@ module.exports = async (Discord, client) =>{
         emitAddListWhenCreatingQueue: false,
 })
 
-let playing = true
-
-async function updateSong(songURL){
-    await songs.findOneAndUpdate({
-        userID: message.author.id,
-    }, 
-    {$set: {
-            song: `${songURL}`,
-    }});
-}
-
+let dataThing
 
 async function playSong(songURL){  
     
@@ -27,32 +18,45 @@ async function playSong(songURL){
     const textChannel = await client.channels.cache.get("957553977896095764")
     const member = await channel.guild.members.cache.get("826004037043617803")
     const message = await textChannel.send(`message`)
-    if(songURL == "toggleStop"){
-        if(playing == true){
-            client.distube.stop(message)
+   /* if(dataThing == "toggleStop"){
+        try{
+            await client.distube.stop(message)
+        }catch(err){
+            
+        }
             textChannel.send("STOPPED SONG")
-            playing = false
+return
+    }if(dataThing == "toggleStart"){
+        try{
+            await client.distube.resume(message)
+        }catch(err){
+
         }
-        else{
-            client.distube.resume(message)
             textChannel.send("STARTED SONG")
-            playing = true
-        }
-    }
-    client.distube.play(channel, songURL, {
+            
+        }*/
+    
+    client.distube.play(channel, currentSong, {
         member,
         textChannel,
         message,
     })
+
+    /*try{
+        await client.distube.resume(message)
+    }catch(err){
+
+    }*/
     try{
-    client.distube.skip(message);
+        await client.distube.skip(message);
     }catch(err){}
+    /*
     client.distube.on("playSong", (queue, song) => {
         textChannel.send("Now playing: "+ song.name)
-    })
+    })*/
 }
 
-let currentSong = ""
+let currentSong = "all i want for christmas is you"
 
 const id = setInterval(async () => {
 
@@ -65,9 +69,19 @@ const id = setInterval(async () => {
         thingi.save()
         return
     }
-    else if(currentSong != data.song){
-        playSong(data.song)
-        currentSong = data.song
+    else if(dataThing != data.song && data.song != ""){
+        
+        if(data.song == "toggleStop"){
+            dataThing = "toggleStop"
+        }
+        else if(data.song == "toggleStart"){
+            dataThing = "toggleStart"
+        } else if(data.song != "toggleStart" && data.song != "toggleStop"){
+            currentSong = data.song
+        }
+        dataThing = data.song
+        
+        playSong(currentSong)
     }
 
 }, 5000);

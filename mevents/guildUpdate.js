@@ -1,6 +1,5 @@
 const GuildModel = require('../models/guildSchema')
 module.exports = async (Discord, client, oldguild, newguild) => {
-    console.log(newguild)
 let lc = await GuildModel.findOne({guildId: newguild.id});
 if(!lc || !lc.logschannel) return
 const logs = newguild.channels.cache.find(channel => channel.name === lc.logschannel)
@@ -14,7 +13,7 @@ if(oldguild.afkChannelId !== newguild.afkChannelId){
     const logEmbed = new Discord.EmbedBuilder()
    .setColor('#e3b938')
     .setDescription(`**\`${newguild.name}\`'s afkChannel has been updated:hammer:!**`)
-    .setImage(newguild.iconURL({extension: png}))
+    .setImage(newguild.iconURL())
 
     .addFields(
         {name: "New Channel:", value: `${channel}`},
