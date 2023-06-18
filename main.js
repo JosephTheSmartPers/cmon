@@ -39,6 +39,7 @@ const mongose = require('mongoose')
 const prefix = '-';
 
 const mdelete = require('./mevents/messageDelete')
+const mupdate = require('./mevents/messageUpdate')
 const cdelete = require('./mevents/channelDelete')
 const ccreate = require('./mevents/channelCreate')
 const cpinsupdate = require('./mevents/channelPinsUpdate')
@@ -62,6 +63,7 @@ const login = require('./mpassword/login')
 
 const fs = require('fs');
 client.on('messageDelete', (message) =>{mdelete(Discord, client, message)})
+client.on('messageUpdate', (oldMessage, newMessage)=>{if(newMessage) mupdate(Discord, client, oldMessage, newMessage)})
 client.on('channelDelete', (channel) =>{if(channel.guild) cdelete(Discord, client, channel)})
 client.on('channelCreate', (channel) =>{if(channel.guild) ccreate(Discord, client, channel)})
 client.on('channelPinsUpdate', (channel, time) =>{if(channel.guild) cpinsupdate(Discord, client, channel)})
