@@ -123,7 +123,6 @@ module.exports = {
             .setColor("DarkOrange")
             .setFooter({iconURL: client.user.displayAvatarURL({dynamic: true}), text: "By: BarniBot"})
 
-
         if(channelCommands.includes(format)){
 
             let channelArg = args.getChannel("channel")
