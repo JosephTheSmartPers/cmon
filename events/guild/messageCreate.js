@@ -29,7 +29,7 @@ module.exports = async (Discord, client, message,) => {
     let prefix
     {
         if (message.guild) {
-            lc = await GuildModel.findOne({ guildId: message.guild.id })
+            lc = await GuildModel.findOne({ guildId: message.guildId })
             if (!lc) { prefix = "-" }
             else {
                 prefix = lc.prefix
@@ -152,6 +152,7 @@ module.exports = async (Discord, client, message,) => {
                     });
             }
             if (message.guild) {
+                try{
                 profileGuildData = await ProfileGuildModels.findOne({ userID: message.author.id.toString(), serverID: message.guildId.toString() });
                 if (!profileGuildData) {
                     let guildProfile = await ProfileGuildModels.create({
@@ -174,7 +175,10 @@ module.exports = async (Discord, client, message,) => {
                             });
                     }
                 }
+            }catch(err){
+                console.log(err)
             }
+        }
         } catch (err) {
             console.log(err)
         }
