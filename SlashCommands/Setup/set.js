@@ -118,7 +118,6 @@ module.exports = {
                 .setColor("DarkRed")
             interaction.reply({embeds: [helpEmbed]})
         }
-        
         let baseEmbed = new EmbedBuilder()
             .setTitle("Succesfully updated database <a:check:854289501148020747>")
             .setColor("DarkOrange")
