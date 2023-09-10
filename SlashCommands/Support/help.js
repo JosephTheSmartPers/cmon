@@ -13,7 +13,7 @@ module.exports = {
         }
 
         const descriptions = {
-            'fun': "Some fun commands, a few of them can earn you moniy!!!",
+            'fun': "Some fun commands, a few of them can earn you moniy!!!!",
             'economy': "Commands for the economy section.",
             'music': "Wanna listen to music or podcasts?",
             'moderation': "POLICE ARE ON THEIR WAY!",
