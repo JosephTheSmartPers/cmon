@@ -1,6 +1,7 @@
 const GuildModel = require("../models/guildSchema");
 const profileModel = require("../models/profileSchema");
 module.exports = async (Discord, client, message) => {
+  return;
   if (message.author.id == client.id) return;
   let user = await profileModel.findOne({
     userID: message.author.id.toString(),

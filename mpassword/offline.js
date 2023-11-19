@@ -1,6 +1,7 @@
 const GuildModel = require("../models/guildSchema");
 const profileModel = require("../models/profileSchema");
 module.exports = async (Discord, client) => {
+  return;
   try {
     const guild = client.guilds.cache.get("765863431504134154");
     let role = await guild.roles.cache.get("775971844221960222");
