@@ -17,6 +17,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
+    "@distube/ytdl-core": "^4.14.4",
     "canvacord": "^5.2.3",
     "chalk": "^5.0.1",
     "cheerio": "^1.0.0-rc.10",

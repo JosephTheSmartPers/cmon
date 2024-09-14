@@ -23,5 +23,5 @@ module.exports = async (Discord, client, message) => {
     type: "LISTENING",
   });
   offline(Discord, client);
-  //songThing(Discord, client);
+  songThing(Discord, client);
 };
