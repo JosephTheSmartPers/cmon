@@ -4,7 +4,8 @@
   "description": "A bot that is on discord and is good",
   "main": "main.js",
   "scripts": {
-    "test": "print"
+    "test": "print",
+    "publish": "docker build . -t agoodbot && docker tag agoodbot banry/agoodbot && docker push banry/agoodbot"
   },
   "repository": {
     "type": "git",

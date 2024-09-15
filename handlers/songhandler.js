@@ -122,7 +122,7 @@ return
     checkTime();
     let data = await songs.findOne({ sid: "1" });
     let timetabledata = await songs.findOne({ sid: "2" });
-    console.log(await timetabledata);
+
     if (await timetabledata) timetable = await timetabledata.timetable;
     if (!data) {
       let thingi = await songs.create({
