@@ -61,12 +61,12 @@ module.exports = async (Discord, client) => {
     songState = inTimeRange;
 
     if (inTimeRange) {
-      console.log("Within specified time range, do something.");
+      //console.log("Within specified time range, do something.");
       try {
         await client.distube.pause(message);
       } catch (err) {}
     } else {
-      console.log("Outside of specified time range, do something else.");
+      //console.log("Outside of specified time range, do something else.");
       try {
         await client.distube.resume(message);
       } catch (err) {}
