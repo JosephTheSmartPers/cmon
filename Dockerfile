@@ -6,6 +6,7 @@ WORKDIR /usr/src/bot
 
 # Copy package.json and install dependencies
 COPY package.json /usr/src/bot
+COPY package-lock.json /usr/src/bot
 RUN npm install
 
 # Copy the rest of the application code
