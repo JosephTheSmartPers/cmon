@@ -16,7 +16,7 @@ module.exports = async (Discord, client, message) => {
   fetch("https://ntfy.sh/BarniBot", {
     method: "POST",
     headers: { Title: "BarniBot online", Tags: "white_check_mark" },
-    body: "Lets go",
+    body: "Maybe it crashed again?",
   });
   console.log(`BarniBot is online`);
   client.user.setActivity(`-help | ${client.guilds.cache.size} servers`, {
