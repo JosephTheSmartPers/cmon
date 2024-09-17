@@ -1,0 +1,83 @@
+const {
+    Client, 
+    Message,
+    MessageEmbed,
+    MessageActionRow,
+    MessageSelectMenu,
+} = require("discord.js")
+
+
+module.exports = {
+    name: "helpt",
+    description: "TEST",
+    aliases: [],
+    cooldown: 0,
+    permissions: ["SPEAK"],
+
+    async execute(message,args, cmd, client, Discord, profileData) {
+
+        const page1 = new MessageEmbed()
+        .setTitle("Meow")
+        .setDescription("Stuff")
+        .addField("command1", "command description")
+        .addField("command2", "command description2")
+
+        const page2 = new MessageEmbed()
+        .setTitle("Vaue")
+        .setDescription("Stuff")
+        .addField("command3", "command description3")
+        .addField("command4", "command description4")
+
+        categories = [
+            {cname: "meow", embed: page1, description: "Cat commands", value: "1"},
+            {cname: "vau", embed: page2, description: "Dog commands", value: "2"}
+        ]
+            const hembed = new MessageEmbed()
+            .setColor('#15ff00')
+            .setTitle(`Select the category!`)
+            .setDescription(`Barnibot`)
+
+            const components = (state) => [
+                new MessageActionRow().addComponents(
+                    new MessageSelectMenu()
+                    .setCustomId(message.id)
+                    .setPlaceholder("Select a category")
+                    .setDisabled(state)
+                    .addOptions(
+                        categories.map((cmd) => {
+                            return {
+                                label: cmd.cname,
+                                value: cmd.value,
+                                description: cmd.description
+                        }
+                    })
+                    )
+                ),
+            ];
+            
+            const initialMessage = await message.channel.send({embeds: [hembed],
+                components: components(false),
+            });
+
+            const filter = (interaction) => interaction.user.id === message.author.id && interaction.customId == message.id;
+    
+    const collector = message.channel.createMessageComponentCollector({
+        filter,
+        componentType: "SELECT_MENU",
+    });
+
+    collector.on('collect', (interaction) => {
+        const [ directory ] = interaction.values;
+        const category = categories.find(
+            x => x.value.toLowerCase() === directory
+        );
+        const categoryEmbed = category.embed
+
+        interaction.update({ embeds: [categoryEmbed], ephemeral: true})
+    });
+    collector.on('end', () => {
+        initialMessage.edit({ components: components(true)})
+    })
+
+    }
+}

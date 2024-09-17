@@ -1,0 +1,77 @@
+module.exports = {
+    name: 'react',
+    cooldown: 0,
+    description: "Make reaction roles!",
+    async execute(message, args, cmd, client, Discord) {
+        const channel = '826787121771315226';
+        const themRole = message.guild.roles.cache.find(role => role.name === "them/they");
+        const himRole = message.guild.roles.cache.find(role => role.name === "he/him");
+        const herRole = message.guild.roles.cache.find(role => role.name === "she/her");
+ 
+        const themEmoji = '👥';
+        const heEmoji = '👦';
+        const herEmoji = '👧';
+ 
+        let embed = new Discord.MessageEmbed()
+            .setColor('#15ff00')
+            .setTitle('Choose your prefered pronouns.')
+            .addFields(
+ 
+                {name: `${themEmoji}`, value: 'them/they'},
+                {name: `${heEmoji}`, value: 'he/him'},
+                {name: `${herEmoji}`, value: 'she/her'}
+            )
+            message.delete()
+ 
+        let messageEmbed = await message.channel.send({embeds: [embed]});
+        messageEmbed.react(themEmoji);
+        messageEmbed.react(heEmoji);
+        messageEmbed.react(herEmoji);
+ 
+        client.on('messageReactionAdd', async (reaction, user) => {
+            if (reaction.message.partial) await reaction.message.fetch();
+            if (reaction.partial) await reaction.fetch();
+            if (user.bot) return;
+            if (!reaction.message.guild) return;
+ 
+            if (reaction.message.channel.id == channel) {
+                if (reaction.emoji.name === themEmoji) {
+                    await reaction.message.guild.members.cache.get(user.id).roles.add(themRole);
+                }
+                if (reaction.emoji.name === heEmoji) {
+                }    await reaction.message.guild.members.cache.get(user.id).roles.add(himRole);
+
+                if (reaction.emoji.name === herEmoji) {
+                        await reaction.message.guild.members.cache.get(user.id).roles.add(herRole);
+                }
+            } else {
+                return;
+            }
+ 
+        });
+ 
+        client.on('messageReactionRemove', async (reaction, user) => {
+ 
+            if (reaction.message.partial) await reaction.message.fetch();
+            if (reaction.partial) await reaction.fetch();
+            if (user.bot) return;
+            if (!reaction.message.guild) return;
+ 
+ 
+            if (reaction.message.channel.id == channel) {
+                if (reaction.emoji.name === themEmoji) {
+                    await reaction.message.guild.members.cache.get(user.id).roles.remove(themRole);
+                }
+                if (reaction.emoji.name === heEmoji) {
+                    await reaction.message.guild.members.cache.get(user.id).roles.remove(himRole);
+                    if (reaction.emoji.name === herEmoji) {
+                        await reaction.message.guild.members.cache.get(user.id).roles.remove(herRole);
+                    }
+                }
+            } else {
+                return;
+            }
+        });
+    }
+ 
+}   

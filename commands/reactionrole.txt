@@ -1,0 +1,94 @@
+const Discord = require('discord.js')
+const {
+        MessageActionRow,
+    MessageSelectMenu
+} = require("discord.js")
+//const disbut = require("discord-buttons");
+module.exports = {
+    name: 'reactionrole',
+    cooldown: 0,
+    aliases: ["rr"],
+    description: 'Reaction roles, very hard',
+    async execute(message, args, cmd, client, Discord){
+       
+        const { content } = message
+    const eachLine = content.split('\n')
+    console.log(eachLine)
+      const eletter = eachLine[0].slice(1).split(/ +/);
+    if(!eachLine[1].includes('=')) return message.reply('You need to put a "**=**" between the emoji and the option.')
+      let sendthing = []
+   let role = []
+   let emoji2 = []
+   let role2 = []
+   let thething = new Map()
+        const embed = new Discord.MessageEmbed()
+    .setTitle(eletter.slice(1).join(" "))
+        .setColor("EE821D")
+        eachLine.forEach(async (line) => { 
+        if (line.includes('=')) {
+            const split = line.split('=')
+            console.log(split)
+            const emoji = split[0].trim()
+            const content = split.slice(1).join(" ");
+            const eachLine = content.split('\n')
+            const herRole = await message.guild.roles.cache.find(role => role.name == content);
+            
+            emoji2.push(emoji)
+             role2.push(content)
+            if(!herRole){
+              return message.reply(`The role ${content} doesn't exist m8.`) 
+              role.push("no")
+              
+            }
+                    }})
+  if(!role.includes("no")){
+    const components = (state) => [
+              new MessageActionRow().addComponents(
+                  new MessageSelectMenu()
+                  .setCustomId("reactionthing")
+                  .setPlaceholder("Select your role!")
+                  .setDisabled(state)
+                  .addOptions(
+                    role2.map((stuff) => {
+                      emoji2.map((stuff2) => {
+                      return {
+                        label: "Add this role:",
+                         value: stuff,
+                           description: stuff,
+                        emoji: emoji2,
+                      }})
+                    }
+                  )
+                  
+              )
+                )
+      ]
+      
+                 if(role == "no") return message.reply(sendthing) 
+      console.log("e")
+    if(role.includes("no")){
+          const initialMessage = await message.channel.send({
+              embeds: [embed],
+              components: components(false),
+          });
+    
+      
+
+          const collector = message.channel.createMessageComponentCollector({
+                            componentType: "SELECT_MENU",
+                       })
+          collector.on("collect", async (interaction) => {
+              const name = interaction.values
+            const addrole = message.guild.roles.cache.find(role => role.name === name);
+            await interaction.message.guild.members.cache.get(user.id).roles.add(addrole);
+
+
+          })
+          collector.on("end", () =>{
+              initialMessage.edit({components: components(true)})
+          })
+  }  
+  
+      
+    }
+    }}
