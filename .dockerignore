@@ -1,8 +1,0 @@
-node_modules
-ffmpeg
-.gitignore
-README.md
-ffmpeg
-ffmpeg.exe
-ffplay.exe
-ffprobe.exe
